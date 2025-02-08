@@ -3,10 +3,11 @@ import { useNavigate } from "react-router-dom"
 import "./Main.css"
 
 export default function Main() {
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // to navigate from page to page
 
   return (
     <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
+      {/* navigation bar for the main page is here */}
       <nav style={{ background: 'black', height: '60px', display: 'flex', padding: '0px', flexDirection: 'row' }} className="navbar">
         <div style={{
           display: 'flex',
@@ -34,7 +35,7 @@ export default function Main() {
         </div> 
       </nav>
       
-    
+    {/* This is the rest of the body */}
     <div style={{
       flex: 1,
       backgroundImage: "url('/sports.jpg')", backgroundSize: "cover",
