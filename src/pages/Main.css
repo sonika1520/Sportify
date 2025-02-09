@@ -1,0 +1,46 @@
+.button {
+    border: none;
+    height: 100%;
+    width: 100%;
+    font-size: 22px;
+    font-family:"Faculty Glyphic", serif;
+    font-weight:400;
+    background-color: black;
+    color: white;
+    margin: '0';
+    padding: '0';
+    cursor: pointer; /* Makes it clickable */
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+.button:hover {
+    background-color: gray; /* Changes color when hovered */
+}
+
+#but3{
+    background-color: '#303030'
+}
+
+#but3:hover{
+    background-color: gray;
+}
+
+
+#but4{
+    background-color: white;
+    color: black;
+}
+
+#but4:hover{
+    background-color: gray;
+}
+
+#but5:hover{
+    background-color: gray;
+}
+
+input{
+    border-radius: 5px;
+    height: 30px;
+    padding: 5px;
+}

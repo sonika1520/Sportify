@@ -1,0 +1,102 @@
+.forgotpass-container {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    background-image: url('/public/sports.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.forgotpass-left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 50px;
+}
+
+.forgotpass-left h1 {
+    font-size: 50px;
+    font-weight: bold;
+}
+
+.forgotpass-left p {
+    font-size: 18px;
+    text-align: center;
+}
+
+.forgotpass-right {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.forgotpass-box {
+    background: white;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 350px;
+}
+
+.forgotpass-box h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.forgotpass-box label {
+    display: block;
+    text-align: left;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.forgotpass-box input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.cancel-button {
+    background: rgb(128, 128, 128);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.cancel-button:hover {
+    background: darkgray;
+}
+
+.reset-button {
+    background: black;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.reset-button:hover {
+    background: rgb(128, 128, 128);
+}
