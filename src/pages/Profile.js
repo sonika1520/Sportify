@@ -36,7 +36,7 @@ export default function Profile() {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log("Profile Data:", formData);
-        navigate("/dashboard"); // Redirect after submission
+        navigate("/home"); // Redirect after submission
     };
 
     return (
@@ -122,7 +122,7 @@ export default function Profile() {
 
 
 
-                    <button style={{marginTop:"20px"}} type="submit" className="profile-button">
+                    <button style={{marginTop:"20px"}} onClick={() => navigate("/Home")} type="submit" className="profile-button">
                         Let's Play
                     </button>
                 </form>

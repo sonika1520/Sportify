@@ -30,7 +30,7 @@ export default function Home() {
                     <div style={{ height: '100%', width: '100%', flex: 3 }}><button className="button">Contact</button></div>
                     <div style={{ height: '100%', width: '100%', flex: 3 }}><button className="button">Friends</button></div>
                     <div style={{ height: '100%', width: '100%', flex: 3 }}><button className="button" onClick={() => navigate("/Profile")}>Profile</button></div>
-                    <div style={{ height: '100%', width: '100%', flex: 3 }}><button className="button" id="but3">Sign Out</button></div>
+                    <div style={{ height: '100%', width: '100%', flex: 3 }}><button className="button" id="but3" onClick={() => navigate("/login")}>Sign Out</button></div>
                 </div>
             </nav>
             <div style={{
