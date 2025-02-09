@@ -17,7 +17,7 @@ export default function Register() {
   const handleEmailChange = (e) => {
     const newEmail = e.target.value;
     setEmail(newEmail);
-    
+
     // Validate Email
     if (!validateEmail(newEmail)) {
       setEmailError("Please enter a valid email address.");
@@ -55,78 +55,83 @@ export default function Register() {
     }
   };
 
-  const isDisabled = !email || emailError|| 
-  !password || passwordError ||
-  !confirmPassword ||  confirmPasswordError;
+  const isDisabled = !email || emailError ||
+    !password || passwordError ||
+    !confirmPassword || confirmPasswordError;
   return (
     <div style={{
-      backgroundImage: "url('/sports.jpg')", backgroundSize: "cover", width: '100vw',
-      height: '100vh', backgroundPosition: 'center',
+      backgroundImage: "url('/sports.jpg')", backgroundSize: "cover",  backgroundPosition: 'center',
 
     }} >
       <div style={{ minHeight: "100vh", display: "flex", flexDirection: "row" }}>
         {/* Left Section with Branding & Background */}
-        <div style={{ backgroundColor:"black",width: '40%', opacity:"80%",color: "white",textAlign: "center"}} className="relative w-1/2 flex flex-col justify-center items-center text-white p-10">
-          <div
-            className="absolute inset-0 bg-black opacity-50"
-            style={{
-              backgroundImage: "url('/sports.jpg')",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }}
-          ></div>
-          <div className="relative z-10 text-center">
-            <h1 className="text-5xl font-extrabold">SPORT!FY</h1>
-            <p className="mt-4 text-lg">
-              Connect with friends and the world around you through sports.
+        <div style={{ backgroundColor: "black", width: '32%', padding:"50px",opacity: "80%", color: "white",alignContent:"center" ,textAlign: "center", justifyContent:"center" }} className="relative w-1/2 flex flex-col justify-center items-center text-white p-10">
+          
+          <div  className="relative z-10 text-center">
+            <h1 style={{fontSize:"80px", fontFamily:"sans-serif", marginBottom:"20px"}}><i>SPORT!FY</i></h1>
+            <p style={{fontSize:"20px"}}>
+              Connect with friends and the world around you through sports. Find people who share your love for sports, join local events, and never miss a game again. Whether you're an athlete, a casual player, or just a fan, Sportify connects you to the world of sports like never before!
             </p>
           </div>
         </div>
-        
+
 
         {/* Right Section with Sign-Up Form */}
-        <div style={{flex:1, justifyContent: "center", alignItems:'center' , textAlign:"center"}} >
-          <div style={{backgroundColor:"white", margin:"200px"}}>
-            <div style={{paddingTop:"20px"}}><h2 className="text-2xl font-semibold text-center mb-6">Sign Up</h2></div>
+        <div style={{ flex: 1, }} >
+          <div style={{ backgroundColor: "white", borderRadius: "10px", margin: "150px 200px", padding: "50px" }}>
+            <div><h2 style={{ margin: "0px", fontFamily:"sans-serif", fontSize:"30px" }} >Sign Up</h2></div>
 
             {/* Sign-Up Form */}
-            <form style={{display:"flex", flexDirection:"column"}}>
-              <div style={{flex:2, marginBottom:"10px"}}><label className="block text-gray-700 font-medium mb-1">Email</label>
-              <input
-                type="email"
-                value={email}
-                onChange={handleEmailChange}
-                placeholder="Enter your email"
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400 mb-4"
-              />{emailError && <p className="text-red-500 text-sm">{emailError}</p>}
+            <form style={{ display: "flex", alignItems: "center", textAlign: "left", padding: "20px", flexDirection: "column" }}>
+              <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
+                <div style={{ display: "flex", padding: "15px 0px", alignItems: "center", justifyContent: "space-between", flex: 2, width: "100%" }}>
+                  <label style={{  width: "40%",textAlign: "left" }} className="block text-gray-700 font-medium mb-1">Email</label>
+                  <input
+                    type="email"
+                    value={email}
+                    style={{ width: "40%" }} 
+                    onChange={handleEmailChange}
+                    placeholder="Enter your email"
+                    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400 mb-4"
+                  /></div>{emailError && <p style={{ margin:"0px 0px 0px 15px",color: "red", fontSize: "10px" }}>{emailError}</p>}
               </div>
 
-              <div style={{flex:2, marginBottom:"10px"}}><label className="block text-gray-700 font-medium mb-1">Password</label>
-              <input
-                type="password"
-                value={password}
-                onChange={handlePasswordChange}
-                placeholder="Enter your password"
-                className="border rounded-md focus:outline-none "
-              /> {passwordError && <p className="text-red-500 text-sm">{passwordError}</p>}</div>
 
-              <div style={{flex:2, marginBottom:"10px"}}><label className="block text-gray-700 font-medium mb-1">Confirm Password</label>
-              <input
-                type="password"
-                value={confirmPassword}
-                onChange={handleConfirmPasswordChange}
-                placeholder="Confirm your password"
-                className="border rounded-md"
-              />{confirmPasswordError && <p className="text-red-500 text-sm">{confirmPasswordError}</p>}</div>
+              <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
+                <div style={{ display: "flex", padding: "15px 0px", alignItems: "center", justifyContent: "space-between", width: "100%", flex: 2}}>
+                  <label style={{width: "40%",  textAlign: "left" }} >Password</label>
+                  <input
+                    type="password"
+                    value={password}
+                    onChange={handlePasswordChange}
+                    placeholder="Enter your password"
+                    className="border rounded-md focus:outline-none "
+                    style={{ width: "40%" }} 
 
-              {/* Register Button */}
-              <div><button disabled={isDisabled} onClick={(e)=>{e.preventDefault();navigate("/Profile")}}>Register</button></div>
+                  /> 
+                </div>{passwordError && <p style={{ margin:"0px 0px 0px 5px",color: "red", fontSize: "10px" }}>{passwordError}</p>}
+              </div>
 
-              {/* Login Link */}
-              <p className="text-gray-600 text-sm text-center mt-4">
-                Already a user? <a href="/login" className="text-black font-medium">Log in here</a>
-              </p>
+              <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
+                <div style={{ display: "flex", padding: "15px 0px", alignItems: "center", justifyContent: "space-between", width: "100%", flex: 2 }}><label style={{ width: "40%",textAlign: "left" }} className="block text-gray-700 font-medium mb-1">Confirm Password</label>
+                  <input
+                    type="password"
+                    value={confirmPassword}
+                    onChange={handleConfirmPasswordChange}
+                    placeholder="Confirm your password"
+                    className="border rounded-md"
+                    style={{ width: "40%" }} 
+                  /></div>{confirmPasswordError && <p style={{ margin:"0px 0px 0px 15px",color: "red", fontSize: "10px" }}>{confirmPasswordError}</p>}</div>
+
+
             </form>
+            {/* Register Button */}
+            <div><button className="button" style={{padding:"10px", width:"300px", borderRadius:"5px"}} disabled={isDisabled} onClick={(e) => { e.preventDefault(); navigate("/Profile") }}>Register</button></div>
+
+            {/* Login Link */}
+            <p className="text-gray-600 text-sm text-center mt-4">
+              Already a user? <a href="/login" className="text-black font-medium">Log in here</a>
+            </p>
           </div>
         </div>
       </div>

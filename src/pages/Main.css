@@ -38,3 +38,9 @@
 #but5:hover{
     background-color: gray;
 }
+
+input{
+    border-radius: 5px;
+    height: 30px;
+    padding: 5px;
+}
