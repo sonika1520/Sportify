@@ -41,12 +41,18 @@ export default function Profile() {
 
     return (
         <div className="profile-container">
-            <div className="profile-left">
-                <h1>SPORT!FY</h1>
-                <p>Connect with friends and the world around you on Sportify.</p>
-            </div>
+            <div style={{ minHeight: "100vh", display: "flex", flexDirection: "row" }}>
+                <div style={{ backgroundColor: "black", width: '32%', padding: "50px", opacity: "80%", color: "white", alignContent: "center", textAlign: "center", justifyContent: "center" }} className="relative w-1/2 flex flex-col justify-center items-center text-white p-10">
 
-            <div className="profile-right">
+                    <div className="relative z-10 text-center">
+                        <h1 style={{ fontSize: "80px", fontFamily: "sans-serif", marginBottom: "20px" }}><i>SPORT!FY</i></h1>
+                        <p style={{ fontSize: "20px" }}>
+                            Connect with friends and the world around you through sports. Find people who share your love for sports, join local events, and never miss a game again. Whether you're an athlete, a casual player, or just a fan, Sportify connects you to the world of sports like never before!
+                        </p>
+                    </div>
+                </div>
+
+            <div style={{ flex: 1, }} className="profile-right">
                 <form className="profile-box" onSubmit={handleSubmit}>
                     <h2>Profile</h2>
 
@@ -92,6 +98,7 @@ export default function Profile() {
                     <div className="dropdown">
                         <button
                             type="button"
+                            
                             className="dropdown-button"
                             onClick={() => setDropdownOpen(!dropdownOpen)}
                         >
@@ -115,10 +122,11 @@ export default function Profile() {
 
 
 
-                    <button type="submit" className="profile-button">
+                    <button style={{marginTop:"20px"}} type="submit" className="profile-button">
                         Let's Play
                     </button>
                 </form>
+            </div>
             </div>
         </div>
     );

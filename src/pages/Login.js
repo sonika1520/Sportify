@@ -7,31 +7,38 @@ export default function Login() {
 
     return (
         <div className="login-container">
-            <div className="login-left">
-                <h1>SPORT!FY</h1>
-                <p>Connect with friends and the world around you on Sportify.</p>
-            </div>
+            <div style={{ minHeight: "100vh", display: "flex", flexDirection: "row" }}>
+                <div style={{ backgroundColor: "black", width: '32%', padding: "50px", opacity: "80%", color: "white", alignContent: "center", textAlign: "center", justifyContent: "center" }} className="relative w-1/2 flex flex-col justify-center items-center text-white p-10">
 
-            <div className="login-right">
-                <div className="login-box">
-                    <h2>Sign in</h2>
+                    <div className="relative z-10 text-center">
+                        <h1 style={{ fontSize: "80px", fontFamily: "sans-serif", marginBottom: "20px" }}><i>SPORT!FY</i></h1>
+                        <p style={{ fontSize: "20px" }}>
+                            Connect with friends and the world around you through sports. Find people who share your love for sports, join local events, and never miss a game again. Whether you're an athlete, a casual player, or just a fan, Sportify connects you to the world of sports like never before!
+                        </p>
+                    </div>
+                </div>
 
-                    <label>Email</label>
-                    <input type="email" placeholder="enter email" />
+                <div style={{ flex: 1, }} className="login-right">
+                    <div className="login-box">
+                        <h2>Sign in</h2>
 
-                    <label>Password</label>
-                    <input type="password" placeholder="Password" />
+                        <label>Email</label>
+                        <input type="email" placeholder="enter email" />
 
-                    <button className="login-button" onClick={() => navigate("/profile")}>
-                        login
-                    </button>
+                        <label>Password</label>
+                        <input type="password" placeholder="Password" />
 
-                    <p className="new-user">
-                        New user? <span onClick={() => navigate("/register")}>Click here</span>
-                    </p>
-                    <p className="forgot-password">
-                        <span onClick={() => navigate("/forgotpass")}>forgot password</span>
-                    </p>
+                        <button className="login-button" onClick={() => navigate("/home")}>
+                            login
+                        </button>
+
+                        <p className="new-user">
+                            New user? <span onClick={() => navigate("/register")}>Click here</span>
+                        </p>
+                        <p className="forgot-password">
+                            <span onClick={() => navigate("/forgotpass")}>forgot password</span>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
