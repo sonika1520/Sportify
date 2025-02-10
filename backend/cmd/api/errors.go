@@ -7,7 +7,12 @@ import (
 
 func (app *application) internalServerError(w http.ResponseWriter, r *http.Request, err error) {
 	log.Println(err.Error())
-	app.logger.Errorw("internal error", "method", r.Method, "path", r.URL.Path, "error", err.Error())
+
+	if app.logger != nil {
+		app.logger.Errorw("internal error", "method", r.Method, "path", r.URL.Path, "error", err.Error())
+	} else {
+		log.Printf("internal error - method: %s, path: %s, error: %s", r.Method, r.URL.Path, err.Error())
+	}
 
 	writeJSONError(w, http.StatusInternalServerError, "the server encountered a problem")
 }
@@ -19,8 +24,11 @@ func (app *application) forbiddenResponse(w http.ResponseWriter, r *http.Request
 }
 
 func (app *application) badRequestResponse(w http.ResponseWriter, r *http.Request, err error) {
-	app.logger.Warnf("bad request", "method", r.Method, "path", r.URL.Path, "error", err.Error())
-
+	if app.logger != nil {
+		app.logger.Warnf("bad request", "method", r.Method, "path", r.URL.Path, "error", err.Error())
+	} else {
+		log.Printf("bad request - method: %s, path: %s, error: %s", r.Method, r.URL.Path, err.Error())
+	}
 	writeJSONError(w, http.StatusBadRequest, err.Error())
 }
 

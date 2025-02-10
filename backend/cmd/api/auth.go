@@ -98,8 +98,6 @@ func (app *application) userLoginHandler(w http.ResponseWriter, r *http.Request)
 		return
 	}
 
-	log.Printf("recived playload email: %s , password: %s", payload.Email, payload.Password)
-
 	ctx := r.Context()
 	user, err := app.store.Users.GetByEmail(ctx, payload.Email)
 	if err != nil {

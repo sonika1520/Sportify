@@ -19,11 +19,16 @@ type Storage struct {
 		GetByEmail(context.Context, string) (*User, error)
 		Create(context.Context, *User) error
 	}
+	Profile interface {
+		GetByEmail(context.Context, string) (*Profile, error)
+		Create(context.Context, *Profile) error
+	}
 }
 
 func NewStorage(db *sql.DB) Storage {
 	return Storage{
-		Users: &UserStore{db},
+		Users:   &UserStore{db},
+		Profile: &ProfileStore{db},
 	}
 }
 
