@@ -14,7 +14,7 @@ var (
 type User struct {
 	ID        int64  `json:"id"`
 	Email     string `json:"email"`
-	Password  string `json:"-"`//makes sure we don't send password in responses
+	Password  string `json:"-"` //makes sure we don't send password in responses
 	CreatedAt string `json:"created_at"`
 }
 
@@ -45,13 +45,10 @@ func (s *UserStore) Create(ctx context.Context, user *User) error {
 		switch {
 		case err.Error() == `pq: duplicate key value violates unique constraint "users_email_key"`:
 			return ErrDuplicateEmail
-		case err.Error() == `pq: duplicate key value violates unique constraint "users_username_key"`:
-			return ErrDuplicateUsername
 		default:
-			return err
+			return errors.New(err.Error())
 		}
 	}
-
 	return nil
 }
 
@@ -60,7 +57,7 @@ func (s *UserStore) GetByID(ctx context.Context, userID int64) (*User, error) {
 		SELECT users.id, email, password, created_at, roles.*
 		FROM users
 		JOIN roles ON (users.role_id = roles.id)
-		WHERE users.id = $1 AND is_active = true
+		WHERE users.id = $1
 	`
 
 	ctx, cancel := context.WithTimeout(ctx, QueryTimeoutDuration)
@@ -92,7 +89,7 @@ func (s *UserStore) GetByID(ctx context.Context, userID int64) (*User, error) {
 func (s *UserStore) GetByEmail(ctx context.Context, email string) (*User, error) {
 	query := `
 		SELECT id, email, password, created_at FROM users
-		WHERE email = $1 AND is_active = true
+		WHERE email = $1
 	`
 
 	ctx, cancel := context.WithTimeout(ctx, QueryTimeoutDuration)

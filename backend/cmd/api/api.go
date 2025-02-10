@@ -48,6 +48,8 @@ func (app *application) mount() http.Handler {
 
 		r.Post("/signup", app.registerUserHandler)
 		r.Post("/login", app.userLoginHandler)
+
+		r.Post("/profile", app.createUserProfileHandler)
 	})
 
 	return r
