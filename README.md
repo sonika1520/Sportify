@@ -9,3 +9,6 @@ Sportify is a web-based platform designed to connect individuals with similar sp
 * Hamsini Sivalenka - Backend Engineer
 * Manav Mishra - Frontend Engineer
 * Sonika Goud Yeada - Frontend Engineer
+
+## Progress Tracker
+[GitHub Project Board]( https://github.com/users/MishNia/projects/1/views/1)
