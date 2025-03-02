@@ -9,7 +9,7 @@ export default function Profile() {
         email: "",  // Include email for API call
         first_name: "",
         last_name: "",
-        age: "",
+        age: 0,
         gender: "",
         sport_preference: [],
     });
@@ -23,9 +23,9 @@ export default function Profile() {
     // Handle Input Changes
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
+        setFormData({ ...formData, [name]: name === "age" ? Number(value) : value, });
     };
-
+    
     // Handle Sports Selection
     const handleSportsChange = (sport) => {
         const updatedSports = formData.sport_preference.includes(sport)
