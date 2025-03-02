@@ -38,6 +38,7 @@ type UserWithToken struct {
 func (app *application) registerUserHandler(w http.ResponseWriter, r *http.Request) {
 	var payload RegisterUserPayload
 
+	app.logger.Infow("Received user create request")
 	if err := readJSON(w, r, &payload); err != nil {
 		app.badRequestResponse(w, r, err)
 		return
@@ -48,7 +49,6 @@ func (app *application) registerUserHandler(w http.ResponseWriter, r *http.Reque
 		return
 	}
 
-	app.logger.Infow("Received user create request")
 	app.logger.Infow("Hashing Password")
 
 	user := &store.User{
