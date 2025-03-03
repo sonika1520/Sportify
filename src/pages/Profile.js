@@ -23,7 +23,7 @@ export default function Profile() {
     // Handle Input Changes
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
+        setFormData({ ...formData, [name]: name === "age" ? Number(value) : value, });
     };
 
     // Handle Sports Selection
