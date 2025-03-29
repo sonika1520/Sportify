@@ -25,7 +25,7 @@ export default function Profile() {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: name === "age" ? Number(value) : value, });
     };
-    
+
     // Handle Sports Selection
     const handleSportsChange = (sport) => {
         const updatedSports = formData.sport_preference.includes(sport)

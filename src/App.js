@@ -7,6 +7,7 @@ import Register from './pages/Register'
 import Login from './pages/Login'
 import Forgotpass from './pages/Forgotpass'
 import Profile from './pages/Profile'
+import CreateEvent from './pages/CreateEvent'
 import './App.css';
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
           <Route path="/Login" element={<Login />}/>
           <Route path="/Forgotpass" element={<Forgotpass />}/>
           <Route path="/Register" element={<Register />}/>
+          <Route path="/create-event" element={<CreateEvent />}/>
         </Routes>
       </BrowserRouter>
     </div>

@@ -11,10 +11,10 @@ export default function Home() {
                     display: 'flex',
                     justifyContent: 'center',
                     alignItems: 'center',
-                    width: '40%', // Ensures full width
-                    backgroundColor: 'black', // Debugging
+                    width: '40%',
+                    backgroundColor: 'black',
                 }}>
-                    <img style={{ width: "50px", paddingRight: "10px" }} src="/iconmain.png" />
+                    <img style={{ width: "50px", paddingRight: "10px" }} src="/iconmain.png" alt={"sportify"} />
                     <p style={{
                         margin: '0',
                         padding: '0',
@@ -30,6 +30,19 @@ export default function Home() {
                     <div style={{ height: '100%', width: '100%', flex: 3 }}><button className="button" onClick={() => navigate("/Find")}>Find</button></div>
                     <div style={{ height: '100%', width: '100%', flex: 3 }}><button className="button">Friends</button></div>
                     <div style={{ height: '100%', width: '100%', flex: 3 }}><button className="button" onClick={() => navigate("/Profile")}>Profile</button></div>
+                    <div style={{ height: '100%', width: '100%', flex: 3 }}>
+                        <button 
+                            className="button" 
+                            onClick={() => navigate("/create-event")}
+                            style={{ 
+                                fontSize: '24px', 
+                                fontWeight: 'bold',
+                                padding: '0 20px'
+                            }}
+                        >
+                            +
+                        </button>
+                    </div>
                     <div style={{ height: '100%', width: '100%', flex: 3 }}><button className="button" id="but3" onClick={() => navigate("/login")}>Sign Out</button></div>
                 </div>
             </nav>
