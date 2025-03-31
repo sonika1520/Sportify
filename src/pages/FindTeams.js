@@ -26,7 +26,7 @@ export default function FindTeams() {
                 <button className="button" onClick={() => navigate("/home")}>Home</button>
                 <button className="button" onClick={() => navigate("/find")}>Find</button>
                 <button className="button">Friends</button>
-                <button className="button" onClick={() => navigate("/profile")}>Profile</button>
+                <button className="button" onClick={() => navigate("/MyProfile")}>Profile</button>
                 <button className="button" id="but3" onClick={() => navigate("/login")}>Sign Out</button>
             </nav>
 
