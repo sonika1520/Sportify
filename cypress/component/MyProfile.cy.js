@@ -1,16 +1,20 @@
 import React from "react";
 import { mount } from "cypress/react";
-import Profile from "../../src/pages/Profile";
+import MyProfile from "../../src/pages/MyProfile";
 import Home from "../../src/pages/Home";
+import FindTeams from "../../src/pages/FindTeams"
+import CreateEvent from "../../src/pages/CreateEvent"
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 
 describe("Profile Component Unit Tests", () => {
   beforeEach(() => {
     mount(
-        <MemoryRouter initialEntries={["/Profile"]}>
+        <MemoryRouter initialEntries={["/MyProfile"]}>
         <Routes>
-          <Route path="/Profile" element={<Profile />} />
+          <Route path="/MyProfile" element={<MyProfile />} />
           <Route path="/Home" element={<Home />} />
+          <Route path="/FindTeams" element={<FindTeams />} />
+          <Route path="/CreateEvent" element={<CreateEvent />} />
         </Routes>
       </MemoryRouter>
     );
@@ -20,6 +24,7 @@ describe("Profile Component Unit Tests", () => {
     cy.contains("Profile").should("exist");
     cy.get("input[name='first_name']").should("exist");
     cy.get("input[name='last_name']").should("exist");
+    cy.get("input[name='email']").should("exist");
     cy.get("input[name='age']").should("exist");
     cy.get("select[name='gender']").should("exist");
     cy.contains("Select Sports").should("exist");
@@ -29,7 +34,7 @@ describe("Profile Component Unit Tests", () => {
     cy.get("input[name='first_name']").type("John").should("have.value", "John");
     cy.get("input[name='last_name']").type("Doe").should("have.value", "Doe");
     cy.get("input[name='email']").type("JohnDoe@gmail.com").should("have.value", "JohnDoe@gmail.com");
-    cy.get("input[name='age']").type("25").should("have.value", "025");
+    cy.get("input[name='age']").type("25").should("have.value", "25");
   });
 
   it("should allow user to select gender", () => {
@@ -49,11 +54,11 @@ describe("Profile Component Unit Tests", () => {
     cy.get("input[type='checkbox']").first().uncheck().should("not.be.checked");
   });
 
-  // it("should submit the form and navigate to /home", () => {
-  //   cy.get("input[name='firstName']").type("John");
-  //   cy.get("input[name='lastName']").type("Doe");
-  //   cy.get("input[name='age']").type("25");
-  //   cy.get("select[name='gender']").select("Male");
-  //   cy.get(".profile-button").click();
-  // });
+//   it("should submit the form and navigate to /home", () => {
+//     cy.get("input[name='firstName']").type("John");
+//     cy.get("input[name='lastName']").type("Doe");
+//     cy.get("input[name='age']").type("25");
+//     cy.get("select[name='gender']").select("Male");
+//     cy.get(".profile-button").click();
+//   });
 });

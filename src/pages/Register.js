@@ -153,7 +153,7 @@ export default function Register() {
             {/* Login Link */}
             <p style={{ textAlign: "center", marginTop: "10px", fontSize: "14px" }}>
               Already a user?{" "}
-              <a href="/login" style={{ color: "black", fontWeight: "bold", textDecoration: "none" }}>
+              <a href="/Login" style={{ color: "black", fontWeight: "bold", textDecoration: "none" }}>
                 Log in here
               </a>
             </p>
