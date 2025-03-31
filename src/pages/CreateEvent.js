@@ -1,3 +1,4 @@
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
 
@@ -6,7 +7,7 @@ import { useState, useEffect, useRef } from 'react';
  * Renders a form for creating new sports events.
  * Handles form submission, location search, and validation.
  */
-export default function CreateEvent() {
+const CreateEvent = () => {
     const navigate = useNavigate();
     const autoCompleteRef = useRef(null);
     
@@ -168,8 +169,11 @@ export default function CreateEvent() {
                     {/* Form fields - each wrapped in a div for proper spacing */}
                     {/* Event Title field */}
                     <div>
-                        <label style={{ display: "block", marginBottom: "5px", fontWeight: "500" }}>Event Title</label>
+                        <label htmlFor="title" style={{ display: "block", marginBottom: "5px", fontWeight: "500" }}>
+                            Event Title
+                        </label>
                         <input
+                            id="title"
                             type="text"
                             name="title"
                             value={formData.title}
@@ -187,8 +191,11 @@ export default function CreateEvent() {
 
                     {/* Description field */}
                     <div>
-                        <label style={{ display: "block", marginBottom: "5px", fontWeight: "500" }}>Description</label>
+                        <label htmlFor="description" style={{ display: "block", marginBottom: "5px", fontWeight: "500" }}>
+                            Description
+                        </label>
                         <textarea
+                            id="description"
                             name="description"
                             value={formData.description}
                             onChange={handleChange}
@@ -207,8 +214,11 @@ export default function CreateEvent() {
 
                     {/* Sport selection dropdown */}
                     <div>
-                        <label style={{ display: "block", marginBottom: "5px", fontWeight: "500" }}>Sport</label>
+                        <label htmlFor="sport" style={{ display: "block", marginBottom: "5px", fontWeight: "500" }}>
+                            Sport
+                        </label>
                         <select
+                            id="sport"
                             name="sport"
                             value={formData.sport}
                             onChange={handleChange}
@@ -232,8 +242,11 @@ export default function CreateEvent() {
 
                     {/* Maximum Players field */}
                     <div>
-                        <label style={{ display: "block", marginBottom: "5px", fontWeight: "500" }}>Maximum Players</label>
+                        <label htmlFor="max_players" style={{ display: "block", marginBottom: "5px", fontWeight: "500" }}>
+                            Maximum Players
+                        </label>
                         <input
+                            id="max_players"
                             type="number"
                             name="max_players"
                             value={formData.max_players}
@@ -251,7 +264,9 @@ export default function CreateEvent() {
 
                     {/* Location field with suggestions dropdown */}
                     <div style={{ position: "relative" }}>
-                        <label style={{ display: "block", marginBottom: "5px", fontWeight: "500" }}>Location</label>
+                        <label htmlFor="location-input" style={{ display: "block", marginBottom: "5px", fontWeight: "500" }}>
+                            Location
+                        </label>
                         <input
                             id="location-input"
                             type="text"
@@ -271,8 +286,11 @@ export default function CreateEvent() {
 
                     {/* Date and Time field */}
                     <div>
-                        <label style={{ display: "block", marginBottom: "5px", fontWeight: "500" }}>Date and Time</label>
+                        <label htmlFor="event_date" style={{ display: "block", marginBottom: "5px", fontWeight: "500" }}>
+                            Date and Time
+                        </label>
                         <input
+                            id="event_date"
                             type="datetime-local"
                             name="event_date"
                             value={formData.event_date}
@@ -310,3 +328,5 @@ export default function CreateEvent() {
         </div>
     );
 }
+
+export default CreateEvent;
