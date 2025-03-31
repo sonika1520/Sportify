@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import Profile from "../../src/pages/Profile";
+import MyProfile from "../pages/MyProfile";
 
 //Mocking useNavigate globally
 const mockNavigate = jest.fn();
@@ -10,37 +10,37 @@ jest.mock("react-router-dom", () => ({
   useNavigate: () => mockNavigate, // Mock useNavigate
 }));
 
-describe("Profile Page Unit Tests", () => {
-  it("should render the profile form correctly", () => {
+describe("My Profile Page Unit Tests", () => {
+  it("should render the My profile form correctly", () => {
     render(
       <MemoryRouter>
-        <Profile />
+        <MyProfile />
       </MemoryRouter>
     );
     
-    expect(screen.getByPlaceholderText("Enter first name")).toBeInTheDocument();
-    expect(screen.getByPlaceholderText("Enter last name")).toBeInTheDocument();
-    expect(screen.getByPlaceholderText("Enter age")).toBeInTheDocument();
-    expect(screen.getByText("Select Gender")).toBeInTheDocument();
+    expect(screen.getByPlaceholderText("Sonika")).toBeInTheDocument();
+    expect(screen.getByPlaceholderText("Yeada")).toBeInTheDocument();
+    expect(screen.getByPlaceholderText("23")).toBeInTheDocument();
+    expect(screen.getByText("Female")).toBeInTheDocument();
     expect(screen.getByText("Select Sports ▾")).toBeInTheDocument();
   });
 
   it("should allow user to enter profile details", () => {
     render(
       <MemoryRouter>
-        <Profile />
+        <MyProfile />
       </MemoryRouter>
     );
     
-    const firstNameInput = screen.getByPlaceholderText("Enter first name");
+    const firstNameInput = screen.getByPlaceholderText("Sonika");
     fireEvent.change(firstNameInput, { target: { value: "John" } });
     expect(firstNameInput.value).toBe("John");
     
-    const lastNameInput = screen.getByPlaceholderText("Enter last name");
+    const lastNameInput = screen.getByPlaceholderText("Yeada");
     fireEvent.change(lastNameInput, { target: { value: "Doe" } });
     expect(lastNameInput.value).toBe("Doe");
     
-    const ageInput = screen.getByPlaceholderText("Enter age");
+    const ageInput = screen.getByPlaceholderText("23");
     fireEvent.change(ageInput, { target: { value: "25" } });
     expect(ageInput.value).toBe("25");
   });
@@ -48,7 +48,7 @@ describe("Profile Page Unit Tests", () => {
   it("should allow user to select gender", () => {
     render(
       <MemoryRouter>
-        <Profile />
+        <MyProfile />
       </MemoryRouter>
     );
     
@@ -60,7 +60,7 @@ describe("Profile Page Unit Tests", () => {
   it("should open and close sports dropdown", () => {
     render(
       <MemoryRouter>
-        <Profile />
+        <MyProfile />
       </MemoryRouter>
     );
     
@@ -75,7 +75,7 @@ describe("Profile Page Unit Tests", () => {
   it("should allow user to select and deselect sports preferences", () => {
     render(
       <MemoryRouter>
-        <Profile />
+        <MyProfile />
       </MemoryRouter>
     );
     
@@ -91,12 +91,11 @@ describe("Profile Page Unit Tests", () => {
   it("should navigate to /home when form is submitted", () => {
     render(
       <MemoryRouter>
-        <Profile />
+        <MyProfile />
       </MemoryRouter>
     );
     
-    const submitButton = screen.getByRole("button", { name: /Let's Play/i });
+    const submitButton = screen.getByRole("button", { name: /Update/i });
     fireEvent.click(submitButton);
-    // expect(mockNavigate).toHaveBeenCalledWith("/Home");
   });
 });

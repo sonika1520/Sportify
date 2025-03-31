@@ -50,7 +50,7 @@ export default function Register() {
       setApiError(result.error);
     } else {
       alert("Signup successful! Redirecting to login.");
-      navigate("/login");
+      navigate("/Profile");
     }
   };
 
@@ -136,6 +136,7 @@ export default function Register() {
               <button
                   type="submit"
                   disabled={emailError || passwordError || confirmPasswordError}
+                  onClick={handleSubmit}
                   style={{
                     padding: "12px",
                     borderRadius: "5px",

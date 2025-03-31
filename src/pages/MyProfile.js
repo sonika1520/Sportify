@@ -50,7 +50,7 @@ export default function MyProfile() {
             setError(result.error);
         } else {
             alert("Profile created successfully!");
-            navigate("/dashboard");
+            navigate("/Home"); 
         }
     };
     return (
