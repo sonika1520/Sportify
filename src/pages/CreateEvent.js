@@ -30,7 +30,7 @@ const CreateEvent = () => {
     useEffect(() => {
         // Load Google Maps JavaScript API
         const googleMapScript = document.createElement('script');
-        googleMapScript.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyDmyMg9zTEshR4IYiUCBN9_OeazNbfvtf8&libraries=places`;
+        googleMapScript.src = `https://maps.googleapis.com/maps/api/js?key=KEY&libraries=places`;
         googleMapScript.async = true;
         
         // Initialize Autocomplete after script loads
