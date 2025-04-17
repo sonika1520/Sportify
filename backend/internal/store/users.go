@@ -119,7 +119,7 @@ func (s *UserStore) GetByID(ctx context.Context, userID int64) (*User, error) {
 
 func (s *UserStore) GetByEmail(ctx context.Context, email string) (*User, error) {
 	query := `
-		SELECT id, email, password, created_at, google_id FROM users
+		SELECT id, email, password, created_at, COALESCE(google_id, '') FROM users
 		WHERE email = $1
 	`
 

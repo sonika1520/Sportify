@@ -7,6 +7,7 @@ import Register from './pages/Register'
 import Login from './pages/Login'
 import Forgotpass from './pages/Forgotpass'
 import Profile from './pages/Profile'
+import GoogleCallback from './pages/GoogleCallback'
 import CreateEvent from './pages/CreateEvent'
 import MyProfile from "./pages/MyProfile";
 import './App.css';
@@ -21,6 +22,7 @@ function App() {
           <Route path="/Home" element={<Home />}/>
           <Route path="/find" element={<FindTeams />} />
           <Route path="/Profile" element={<Profile />}/>
+          <Route path="/auth/google/callback" element={<GoogleCallback />}/>
           <Route path="/Login" element={<Login />}/>
           <Route path="/Forgotpass" element={<Forgotpass />}/>
           <Route path="/Register" element={<Register />}/>

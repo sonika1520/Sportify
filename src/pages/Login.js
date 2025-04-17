@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.css"; // Make sure to create this CSS file for styling
@@ -6,14 +5,11 @@ import { loginUser } from "../api"; // Import API function
 
 export default function Login() {
     const navigate = useNavigate();
-    const [formData, setFormData] = useState({ email: "", password: "" });
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     const [error, setError] = useState("");
 
-    const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-    };
-
-    const handleSubmit = async (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
         const result = await loginUser(formData.email, formData.password);
 
@@ -26,6 +22,9 @@ export default function Login() {
         }
     };
 
+    const handleGoogleSignIn = () => {
+        window.location.href = 'http://localhost:8080/v1/auth/google';
+    };
 
     return (
         <div className="login-container">
@@ -43,18 +42,60 @@ export default function Login() {
                 <div style={{ flex: 1, }} className="login-right">
                     <div className="login-box">
                         <h2>Sign in</h2>
-                        {error && <p className="error">{error}</p>}
-                        <form onSubmit={handleSubmit}>
-                        <label>Email</label>
-                        <input type="email" placeholder="enter email" name="email" required onChange={handleChange}/>
 
-                        <label>Password</label>
-                        <input type="password" placeholder="Password" name="password" required onChange={handleChange}/>
+                        <form onSubmit={handleLogin}>
+                            <label>Email</label>
+                            <input 
+                                type="email" 
+                                placeholder="enter email" 
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                required
+                            />
 
-                        <button type ="submit" className="login-button" onClick={() => navigate("/home")}>
-                            login
-                        </button>
+                            <label>Password</label>
+                            <input 
+                                type="password" 
+                                placeholder="Password" 
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
+                            />
+
+                            {error && <p style={{ color: 'red', fontSize: '14px', marginTop: '10px' }}>{error}</p>}
+
+                            <button type="submit" className="login-button">
+                                login
+                            </button>
                         </form>
+
+                        {/* Google Sign-In Button */}
+                        <div style={{ marginTop: "20px", textAlign: "center" }}>
+                            <button
+                                onClick={handleGoogleSignIn}
+                                style={{
+                                    padding: "10px",
+                                    width: "300px",
+                                    borderRadius: "5px",
+                                    backgroundColor: "#4285f4",
+                                    color: "white",
+                                    border: "none",
+                                    cursor: "pointer",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    gap: "10px",
+                                }}
+                            >
+                                <img 
+                                    src="https://www.google.com/favicon.ico" 
+                                    alt="Google" 
+                                    style={{ width: "20px", height: "20px" }}
+                                />
+                                Sign in with Google
+                            </button>
+                        </div>
+
                         <p className="new-user">
                             New user? <span onClick={() => navigate("/register")}>Click here</span>
                         </p>

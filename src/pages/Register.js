@@ -22,6 +22,14 @@ export default function Register() {
     setEmailError(validateEmail(newEmail) ? "" : "Please enter a valid email address.");
   };
 
+  const isDisabled = !email || emailError ||
+  !password || passwordError ||
+  !confirmPassword || confirmPasswordError;
+  
+  const handleGoogleSignIn = () => {
+    window.location.href = 'http://localhost:8080/v1/auth/google';
+  };
+
   const handlePasswordChange = (e) => {
     const newPassword = e.target.value;
     setPassword(newPassword);
@@ -132,22 +140,53 @@ export default function Register() {
               />
               {confirmPasswordError && <p style={{ color: "red", fontSize: "12px" }}>{confirmPasswordError}</p>}
 
-              {/* Register Button */}
+              {/* Google Sign-In Button */}
+            <div style={{ marginTop: "20px", textAlign: "center" }}>
               <button
+                onClick={handleGoogleSignIn}
+                style={{
+                  padding: "10px",
+                  width: "300px",
+                  borderRadius: "5px",
+                  backgroundColor: "#4285f4",
+                  color: "white",
+                  border: "none",
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "10px",
+                }}
+              >
+                <img 
+                  src="https://www.google.com/favicon.ico" 
+                  alt="Google" 
+                  style={{ width: "20px", height: "20px" }}
+                />
+                Sign in with Google
+              </button>
+            </div>
+
+
+              {/* Register Button */}
+              <div style={{ marginTop: "20px" }}>
+              <button 
                   type="submit"
-                  disabled={emailError || passwordError || confirmPasswordError}
                   onClick={handleSubmit}
-                  style={{
-                    padding: "12px",
-                    borderRadius: "5px",
-                    border: "none",
-                    backgroundColor: emailError || passwordError || confirmPasswordError ? "gray" : "black",
-                    color: "white",
-                    cursor: emailError || passwordError || confirmPasswordError ? "not-allowed" : "pointer",
-                  }}
+                style={{
+                  padding: "12px",
+                  borderRadius: "5px",
+                  color: "white",
+                  border: "none",
+                  backgroundColor: emailError || passwordError || confirmPasswordError ? "gray" : "black",
+                  color: "white",
+                  cursor: emailError || passwordError || confirmPasswordError ? "not-allowed" : "pointer",
+                }} 
+                disabled={isDisabled} 
               >
                 Register
               </button>
+            </div>
             </form>
 
             {/* Login Link */}
