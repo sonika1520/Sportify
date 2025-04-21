@@ -280,54 +280,57 @@ export default function EventDetails() {
     );
 
     return (
-        <div style={{
-            minHeight: "100vh",
-            backgroundImage: "url('/sports.jpg')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            padding: "20px"
-        }}>
-            <div style={{
-                maxWidth: "800px",
-                margin: "0 auto",
-                backgroundColor: "rgba(0, 0, 0, 0.8)",
-                color: "white",
-                padding: "20px",
-                borderRadius: "8px"
-            }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
-                    <h1 style={{ margin: 0 }}>{event.title}</h1>
-                    <div style={{ display: "flex", gap: "10px" }}>
-                        {isEventOwner && (
-                            <button
-                                onClick={handleUpdateEvent}
-                                style={{
-                                    padding: "8px 16px",
-                                    backgroundColor: "#FF9800",
-                                    color: "white",
-                                    border: "none",
-                                    borderRadius: "4px",
-                                    cursor: "pointer"
-                                }}
-                            >
-                                Update Event
-                            </button>
-                        )}
+        <div>
+        <nav style={{
+                background: 'black',
+                height: '60px',
+                display: 'flex',
+                padding: '0px',
+                flexDirection: 'row'
+            }} className="navbar">
+                <div style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    width: '40%',
+                    backgroundColor: 'black',
+                }}>
+                    <img style={{ width: "50px", paddingRight: "10px" }} src="/iconmain.png" alt={"sportify"} />
+                    <p style={{
+                        margin: '0',
+                        padding: '0',
+                        color: 'white',
+                        fontSize: '40px',
+                        fontFamily: 'initial'
+                    }}>
+                        SPORT!FY
+                    </p>
+                </div>
+                <div style={{ flex: 2, display: 'flex', height: '100%', width: '100%', justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }} className="flex">
+                    <div style={{ flex: 3, height: '100%', width: '100%' }}><button className="button" onClick={() => navigate("/Home")}>Home</button></div>
+                    <div style={{ height: '100%', width: '100%', flex: 3 }}><button className="button" onClick={() => navigate("/MyProfile")}>Profile</button></div>
+                    <div style={{ height: '100%', width: '100%', flex: 3 }}>
                         <button
-                            onClick={() => navigate('/Home')}
+                            className="button"
+                            onClick={() => navigate("/create-event")}
                             style={{
-                                padding: "8px 16px",
-                                backgroundColor: "#2196F3",
-                                color: "white",
-                                border: "none",
-                                borderRadius: "4px",
-                                cursor: "pointer"
+                                fontSize: '24px',
+                                fontWeight: 'bold',
+                                padding: '0 20px'
                             }}
                         >
-                            Back to Home
+                            +
                         </button>
                     </div>
+                    <div style={{ height: '100%', width: '100%', flex: 3 }}><button className="button" id="but3" onClick={() => {
+                            localStorage.removeItem("token");
+                            navigate("/login");
+                        }}>Sign Out</button></div>
                 </div>
+            </nav>
+        <div className="event-details">
+            <h1>{event.title}</h1>
+            <div className="event-info">
 
                 <div style={{ marginBottom: "20px" }}>
                     {isEventOwner && (
@@ -591,6 +594,7 @@ export default function EventDetails() {
                     </div>
                 )}
             </div>
+        </div>
         </div>
     );
 }

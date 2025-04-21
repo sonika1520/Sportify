@@ -325,7 +325,9 @@ export default function Home() {
             <div style={{
                 display: "flex",
                 flexWrap: "wrap",
-                padding: "0 20px 20px 20px",
+                marginLeft: "30px",
+                justifyContent:"flex-start",
+                padding: "20px 40px",
                 gap: "20px",
                 alignItems: "flex-start",
                 minHeight: "calc(100vh - 180px)" // Adjusted for search bar
@@ -366,31 +368,37 @@ export default function Home() {
                     <div
                         key={event.id}
                         style={{
-                            flex: "0 1 calc(25% - 20px)",
-                            maxWidth: "300px",
-                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            flex: "0 1 calc(35% - 60px)",
+                            marginRight: "20px",
+                            justifyContent: "space-between",
+                            width: "800px",
+                            backgroundColor: 'rgba(0, 0, 0, 0.7)',
                             color: "white",
-                            height: "fit-content",
-                            padding: "15px",
+                            height: "280px",
                             borderRadius: "8px",
                             display: "flex",
                             flexDirection: "column",
-                            justifyContent: "space-between"
                         }}
                     >
-                        <div>
-                            <h1 style={{ fontSize: "20px", margin: "0 0 8px 0" }}>{event.title}</h1>
-                            <p style={{ margin: "4px 0", fontSize: "14px" }}><i>{new Date(event.event_date).toLocaleString()}</i></p>
-                            <p style={{ margin: "4px 0", fontSize: "14px" }}>Sport: {event.sport}</p>
-                            <p style={{ margin: "4px 0", fontSize: "14px" }}>Location: {event.location_name}</p>
-                            <p style={{ margin: "4px 0", fontSize: "14px" }}>Max Players: {event.max_players}</p>
-                            <p style={{ margin: "4px 0", fontSize: "14px" }}>Description: {event.description}</p>
+                        <div style={{ margin: "0px"}}>
+                            <div style={{ display: "flex", flexDirection: "row", backgroundColor:"black", borderRadius: "8px 8px 0 0", padding: "10px" }}>
+                            <h1 style={{ fontSize: "20px", margin: "0 0 8px 0", flex: 1 }}>{event.title}</h1>
+                            <p style={{ margin: "4px 0", fontSize: "14px", flex: 1 }}>Sport: {event.sport}</p>
+                            </div>
+                            <div style={{ padding: "10px" }}>
+                            <p style={{ margin: "10px 0", fontSize: "14px" }}>{event.description}</p>
+                            <div style={{ display: "flex", flexDirection: "row" }}>  
+                             <p style={{ margin: "4px 0", fontSize: "14px", flex: 1 }}>📍 {event.location_name}</p>
+                             <p style={{ margin: "4px 0", fontSize: "14px", flex: 1 }}>🗓 {new Date(event.event_date).toLocaleString()}</p>
+                            </div>
+                            <p style={{ paddingTop: "10px 0", fontSize: "14px" }}>Max Players: {event.max_players}</p> 
+                            </div>
                         </div>
 
                         <div style={{
                             display: "flex",
                             gap: "8px",
-                            marginTop: "12px"
+                            margin: "0px 10px 20px 10px"
                         }}>
                             <button
                                 onClick={() => handleJoinTeam(event.id)}
