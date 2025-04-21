@@ -9,6 +9,7 @@ import Forgotpass from './pages/Forgotpass'
 import Profile from './pages/Profile'
 import GoogleCallback from './pages/GoogleCallback'
 import CreateEvent from './pages/CreateEvent'
+import UpdateEvent from './pages/UpdateEvent'
 import MyProfile from "./pages/MyProfile";
 import EventDetails from "./pages/EventDetails";
 import './App.css';
@@ -70,10 +71,15 @@ function App() {
                 <CreateEvent />
               </ProfileRequiredRoute>
             }/>
-            <Route path="/MyProfile" element={
+            <Route path="/update-event/:eventId" element={
               <ProfileRequiredRoute>
-                <MyProfile />
+                <UpdateEvent />
               </ProfileRequiredRoute>
+            }/>
+            <Route path="/MyProfile" element={
+              <ProtectedRoute>
+                <MyProfile />
+              </ProtectedRoute>
             }/>
           </Routes>
         </BrowserRouter>
