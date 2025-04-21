@@ -13,6 +13,26 @@ const GOOGLE_MAPS_API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY || 'YOUR_A
 if (GOOGLE_MAPS_API_KEY === 'YOUR_API_KEY') {
     console.warn('Please replace YOUR_API_KEY with your actual Google Maps API key.');
 }
+// Sport emoji mapping
+const sportEmojis = {
+    'Badminton': '🏸',
+    'Tennis': '🎾',
+    'Basketball': '🏀',
+    'Football': '⚽',
+    'Cricket': '🏏',
+    'Baseball': '⚾',
+    'Volleyball': '🏐',
+    'Table Tennis': '🏓',
+    'Rugby': '🏉',
+    'Golf': '⛳',
+    'Swimming': '🏊',
+    'Running': '🏃',
+    'Cycling': '🚴',
+    'Boxing': '🥊',
+    'Wrestling': '🤼',
+    'Soccer': '⚽',
+    // Add more sports and their emojis as needed
+};
 
 export default function EventDetails() {
     const { eventId } = useParams();
@@ -281,57 +301,51 @@ export default function EventDetails() {
 
     return (
         <div>
-        <nav style={{
-                background: 'black',
-                height: '60px',
-                display: 'flex',
-                padding: '0px',
-                flexDirection: 'row'
-            }} className="navbar">
-                <div style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    width: '40%',
-                    backgroundColor: 'black',
-                }}>
-                    <img style={{ width: "50px", paddingRight: "10px" }} src="/iconmain.png" alt={"sportify"} />
-                    <p style={{
-                        margin: '0',
-                        padding: '0',
-                        color: 'white',
-                        fontSize: '40px',
-                        fontFamily: 'initial'
+            <div>
+                <nav className="navbar">
+                    <div style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        width: '40%',
+                        backgroundColor: 'black',
                     }}>
-                        SPORT!FY
-                    </p>
-                </div>
-                <div style={{ flex: 2, display: 'flex', height: '100%', width: '100%', justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }} className="flex">
-                    <div style={{ flex: 3, height: '100%', width: '100%' }}><button className="button" onClick={() => navigate("/Home")}>Home</button></div>
-                    <div style={{ height: '100%', width: '100%', flex: 3 }}><button className="button" onClick={() => navigate("/MyProfile")}>Profile</button></div>
-                    <div style={{ height: '100%', width: '100%', flex: 3 }}>
-                        <button
-                            className="button"
-                            onClick={() => navigate("/create-event")}
-                            style={{
-                                fontSize: '24px',
-                                fontWeight: 'bold',
-                                padding: '0 20px'
-                            }}
-                        >
-                            +
-                        </button>
+                        <img style={{ width: "50px", paddingRight: "10px" }} src="/iconmain.png" alt={"sportify"} />
+                        <p style={{
+                            margin: '0',
+                            padding: '0',
+                            color: 'white',
+                            fontSize: '40px',
+                            fontFamily: 'initial'
+                        }}>
+                            SPORT!FY
+                        </p>
                     </div>
-                    <div style={{ height: '100%', width: '100%', flex: 3 }}><button className="button" id="but3" onClick={() => {
-                            localStorage.removeItem("token");
-                            navigate("/login");
-                        }}>Sign Out</button></div>
-                </div>
-            </nav>
-        <div className="event-details">
-            <h1>{event.title}</h1>
-            <div className="event-info">
-
+                    <div style={{ flex: 2, display: 'flex', height: '100%', width: '100%', justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }} className="flex">
+                        <div style={{ flex: 3, height: '100%', width: '100%' }}><button className="button" onClick={() => navigate("/Home")}>Home</button></div>
+                        <div style={{ height: '100%', width: '100%', flex: 3 }}><button className="button" onClick={() => navigate("/MyProfile")}>Profile</button></div>
+                        <div style={{ height: '100%', width: '100%', flex: 3 }}>
+                            <button
+                                className="button"
+                                onClick={() => navigate("/create-event")}
+                                style={{
+                                    fontSize: '24px',
+                                    fontWeight: 'bold',
+                                    padding: '0 20px'
+                                }}
+                            >
+                                +
+                            </button>
+                        </div>
+                        <div style={{ height: '100%', width: '100%', flex: 3 }}>
+                            <button className="button" onClick={() => {
+                                localStorage.removeItem("token");
+                                navigate("/login");
+                            }}>Sign Out</button>
+                        </div>
+                    </div>
+                </nav>
+    
                 <div style={{ marginBottom: "20px" }}>
                     {isEventOwner && (
                         <div style={{
@@ -383,7 +397,6 @@ export default function EventDetails() {
                                     <span style={{ fontSize: "16px" }}>🗺️</span>
                                 </a>
                             </p>
-                            {/* Map Component - Light Mode */}
                             <div style={{
                                 marginTop: "15px",
                                 borderRadius: "8px",
@@ -444,7 +457,7 @@ export default function EventDetails() {
                     </div>
                     <p><strong>Description:</strong> {event.description}</p>
                 </div>
-
+    
                 <div style={{ marginBottom: "20px" }}>
                     {isParticipant ? (
                         <button
@@ -479,14 +492,14 @@ export default function EventDetails() {
                         </button>
                     )}
                 </div>
-
+    
                 {isParticipant && (
                     <div style={{ marginTop: "20px" }}>
                         <h2>Event Chat</h2>
                         <ChatWindow eventId={event.id} isParticipant={true} />
                     </div>
                 )}
-
+    
                 {error && (
                     <div style={{
                         marginTop: "20px",
@@ -497,8 +510,7 @@ export default function EventDetails() {
                         {error}
                     </div>
                 )}
-
-                {/* Participants Popup */}
+    
                 {showParticipants && (
                     <div style={{
                         position: "fixed",
@@ -537,7 +549,7 @@ export default function EventDetails() {
                                     ×
                                 </button>
                             </div>
-
+    
                             {loadingParticipants ? (
                                 <div style={{ textAlign: "center", padding: "20px" }}>
                                     <p>Loading participants...</p>
@@ -594,7 +606,80 @@ export default function EventDetails() {
                     </div>
                 )}
             </div>
-        </div>
+    
+            <div className="event-container">
+                <div className="event-details">
+                    <div className="event-header">
+                        <div className="event-creator">
+                            <div className="creator-avatar">
+                                {event.owner_first_name ? event.owner_first_name[0] : '?'}
+                            </div>
+                            <span className="creator-name">{event.owner_first_name + " " + event.owner_last_name || 'Unknown'}</span>
+                        </div>
+                        <div className="participant-count">
+                            {event.registered_count}/{event.max_players}
+                        </div>
+                    </div>
+    
+                    <div className="event-title">
+                        <h1>{event.title}</h1>
+                    </div>
+    
+                    <div className="event-description">
+                        {event.description}
+                    </div>
+    
+                    <div className="event-info">
+                        <div className="info-row">
+                            <span className="info-label">
+                                <span className="info-icon">{sportEmojis[event.sport] || '🏃'}</span>
+                                Sport
+                            </span>
+                            <span className="info-value">{event.sport}</span>
+                        </div>
+                        <div className="info-row">
+                            <span className="info-label">
+                                <span className="info-icon">📍</span>
+                                Location
+                            </span>
+                            <span className="info-value">{event.location_name}</span>
+                        </div>
+                        <div className="info-row">
+                            <span className="info-label">
+                                <span className="info-icon">📅</span>
+                                Date & Time
+                            </span>
+                            <span className="info-value">
+                                {new Date(event.event_datetime).toLocaleString(undefined, {
+                                    month: "2-digit",
+                                    day: "2-digit",
+                                    year: "numeric",
+                                    hour: "2-digit",
+                                    minute: "2-digit",
+                                    hour12: true
+                                })}
+                            </span>
+                        </div>
+                    </div>
+    
+                    <div className="event-actions">
+                        {isParticipant ? (
+                            <button onClick={handleLeave} className="leave-button">
+                                Leave
+                            </button>
+                        ) : (
+                            <button onClick={handleJoin} className="join-button">
+                                Join
+                            </button>
+                        )}
+                    </div>
+                </div>
+    
+                <div className="chat-section">
+                    <ChatWindow eventId={event.id} isParticipant={isParticipant} />
+                </div>
+            </div>
         </div>
     );
+    
 }
