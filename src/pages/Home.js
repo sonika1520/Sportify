@@ -227,9 +227,9 @@ export default function Home() {
         );
     }
 
-    if (loading) {
-        return <div className="loading">Loading events...</div>;
-    }
+    // if (loading) {
+    //     return <div className="loading">Loading events...</div>;
+    // }
 
     if (error) {
         return <div className="error">{error}</div>;
@@ -368,20 +368,11 @@ export default function Home() {
                 ) : null}
             </div>
     
-            <div style={{
-                display: "flex",
-                flexWrap: "wrap",
-                marginLeft: "30px",
-                justifyContent: "flex-start",
-                padding: "20px 40px",
-                gap: "20px",
-                alignItems: "flex-start",
-                minHeight: "calc(100vh - 180px)"
-            }}>
+            <div className="event-grid">
                 {/* No Events Found Message */}
-                {filteredEvents.length === 0 && (
+                {filteredEvents.length === 0 ? (
                     <div style={{
-                        width: "100%",
+                        gridColumn: "1 / -1",
                         textAlign: "center",
                         padding: "40px",
                         backgroundColor: "rgba(0, 0, 0, 0.7)",
@@ -400,76 +391,77 @@ export default function Home() {
                                 padding: "10px 20px",
                                 borderRadius: "4px",
                                 cursor: "pointer",
-                                marginTop: "10px",
-                                fontSize: "16px"
+                                marginTop: "10px"
                             }}
                         >
-                            Show All Events
+                            Clear Search
                         </button>
                     </div>
-                )}
-    
-                {/* Event Cards */}
-                {filteredEvents.map((event) => (
-                    <div
-                        key={event.id}
-                        className="event-card"
-                    >
-                        <div className="event-card-header">
-                            <div className="event-creator">
-                                <div className="creator-avatar-home">
-                                    {event.owner_first_name?.charAt(0).toUpperCase()}
-                                </div>
-                                <span className="creator-name-home">{event.owner_first_name + " " + event.owner_last_name}</span>
-                            </div>
-                            <div className="participant-count">
-                                👥 {event.participants?.length || 0}/{event.max_players}
-                            </div>
-                        </div>
-                        <div className="event-content">
-                            <h3 className="event-title">{event.title}</h3>
-                            <div className="event-info">
-                                <div className="info-row">
-                                    <div className="info-icon">
-                                        {getSportEmoji(event.sport)}
+                ) : (
+                    filteredEvents.map(event => (
+                        <div key={event.id} className="event-card">
+                            <div className="event-card-header">
+                                <div className="event-creator">
+                                    <div className="creator-avatar-home">
+                                        {event.owner_first_name ? event.owner_first_name[0] : '?'}
                                     </div>
-                                    {event.sport}
+                                    <span className="creator-name-home">
+                                        {event.owner_first_name} {event.owner_last_name}
+                                    </span>
                                 </div>
-                                <div className="info-row">
-                                    <div className="info-icon">📍</div>
-                                    {event.location_name}
-                                </div>
-                                <div className="info-row">
-                                    <div className="info-icon">🗓</div>
-                                    {formatDate(event.event_datetime)}
+                                <div className="participant-count">
+                                    {event.registered_count}/{event.max_players}
                                 </div>
                             </div>
+                            <div className="event-content">
+                                <h3 className="event-title">{event.title}</h3>
+                                <div className="event-info">
+                                    <div className="info-row">
+                                        <span className="info-icon">{getSportEmoji(event.sport)}</span>
+                                        <span>{event.sport}</span>
+                                    </div>
+                                    <div className="info-row">
+                                        <span className="info-icon">📍</span>
+                                        <span>{event.location_name}</span>
+                                    </div>
+                                    <div className="info-row">
+                                        <span className="info-icon">📅</span>
+                                        <span>{formatDate(event.event_datetime)}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="event-actions">
+                                <button
+                                    onClick={() => handleViewDetails(event.id)}
+                                    className="action-button view-button"
+                                >
+                                    View Details
+                                </button>
+                                {event.participants && (
+                                    <button
+                                        onClick={() => handleJoinTeam(event.id)}
+                                        className="action-button join-button"
+                                        disabled={
+                                            event.participants.some(p => 
+                                                p.user_id === parseInt(localStorage.getItem('userId'))
+                                            ) || 
+                                            event.participants.length >= event.max_players
+                                        }
+                                    >
+                                        {event.participants.some(p => 
+                                            p.user_id === parseInt(localStorage.getItem('userId'))
+                                        )
+                                            ? "Already Joined"
+                                            : event.participants.length >= event.max_players
+                                                ? "Full"
+                                                : "Join Team"
+                                        }
+                                    </button>
+                                )}
+                            </div>
                         </div>
-                        <div className="event-actions">
-                            <button
-                                className="action-button join-button"
-                                onClick={() => handleJoinTeam(event.id)}
-                                disabled={loading ||
-                                    event.participants?.length >= event.max_players ||
-                                    joinedEvents.includes(event.id) ||
-                                    (event.participants && event.participants.some(p =>
-                                        p.user_id === parseInt(localStorage.getItem('userId'))))}
-                            >
-                                {event.participants?.length >= event.max_players ? "Event Full" :
-                                    joinedEvents.includes(event.id) ||
-                                        (event.participants && event.participants.some(p =>
-                                            p.user_id === parseInt(localStorage.getItem('userId'))))
-                                        ? "Already Joined" : "Join Team"}
-                            </button>
-                            <button
-                                className="action-button view-button"
-                                onClick={() => handleViewDetails(event.id)}
-                            >
-                                View Details
-                            </button>
-                        </div>
-                    </div>
-                ))}
+                    ))
+                )}
             </div>
         </div>
     );
