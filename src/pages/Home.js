@@ -265,8 +265,8 @@ export default function Home() {
                         padding: '0',
                         color: 'white',
                         fontSize: '40px',
-                        fontweight: 600,
-                        fontstyle: 'italic'
+                        fontWeight: 600,
+                        fontStyle: 'italic'
                     }}>
                         SPORT!FY
                     </p>
