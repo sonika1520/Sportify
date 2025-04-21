@@ -174,7 +174,7 @@ func (app *application) createJwtToken(userID int64) (string, error) {
 		"iss": app.config.auth.token.iss,
 		"aud": app.config.auth.token.iss,
 	}
-	token, err := app.authenticator.GenarateToken(claims)
+	token, err := app.authenticator.GenerateToken(claims)
 	if err != nil {
 		return "", err
 	}
@@ -204,7 +204,7 @@ func (app *application) googleCallbackHandler(w http.ResponseWriter, r *http.Req
 	userInfo, err := auth.GetGoogleUserInfo(code)
 	if err != nil {
 		app.logger.Errorw("Failed to get Google user info", "error", err)
-		app.internalServerError(w, r, err)
+		app.badRequestResponse(w, r, fmt.Errorf("invalid or expired code"))
 		return
 	}
 
