@@ -41,15 +41,11 @@ func (m *mockUserStore) GetByID(ctx context.Context, userID int64) (*store.User,
 }
 
 func (m *mockUserStore) CreateOrUpdateGoogleUser(ctx context.Context, googleID, email, name string) (*store.User, bool, error) {
-	// Mock Google user creation/update
-	return &store.User{
-		ID:        1,
-		Email:     email,
-		Name:      name,
-		GoogleID:  googleID,
-		CreatedAt: time.Now().Format(time.RFC3339),
-		UpdatedAt: time.Now().Format(time.RFC3339),
-	}, true, nil
+	args := m.Called(ctx, googleID, email, name)
+	if args.Get(0) != nil {
+		return args.Get(0).(*store.User), args.Bool(1), args.Error(2)
+	}
+	return nil, false, args.Error(2)
 }
 
 type mockProfileStore struct {
@@ -139,6 +135,11 @@ func (m *mockEventStore) Leave(ctx context.Context, eventID, userID int64) error
 
 func (m *mockEventStore) GetAllWithFilter(ctx context.Context, filter *store.EventFilter) ([]*store.Event, error) {
 	// Mock getting all events with filter
+	return []*store.Event{}, nil
+}
+
+func (m *mockEventStore) GetAllSimple(ctx context.Context) ([]*store.Event, error) {
+	// Mock getting all events without filter
 	return []*store.Event{}, nil
 }
 

@@ -1,42 +1,136 @@
-.event-details {
-    max-width: 800px;
-    margin: 2rem auto;
-    padding: 2rem;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+body{
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/public/sports.jpg');
+    background-size: cover;
+    background-position: center;
 }
 
-.event-details h1 {
-    color: #333;
-    margin-bottom: 1.5rem;
-    text-align: center;
+.event-container {
+    display: flex;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 20px;
+    min-height: calc(100vh - 100px); /* Subtract navbar height and margins */
+    align-items: stretch; /* Make children stretch to the same height */
+}
+
+.event-details {
+    flex: 1;
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    padding: 1.5rem;
+    min-width: 0; /* Prevents flex item from overflowing */
+    display: flex;
+    flex-direction: column;
+}
+
+.event-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #eee;
+}
+
+.event-creator {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.creator-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.creator-name {
+    font-size: 16px;
+    font-weight: 500;
+    color: #f0f0f0;
+}
+
+.participant-count {
+    font-size: 14px;
+    color: #f0f0f0;
+}
+
+.event-title {
+    margin: 1rem 0;
+}
+
+.event-title h1 {
+    color: #f0f0f0;
+    font-size: 20px;
+    margin: 0;
+    padding: 0;
+}
+
+.event-description {
+    color: #f0f0f0;
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 1rem 0;
+    padding: 1rem;
+    /* background-color: #f8f8f8; */
+    border-radius: 8px;
 }
 
 .event-info {
-    margin-bottom: 2rem;
+    margin: 1.5rem 0;
 }
 
-.event-info p {
-    margin: 0.5rem 0;
-    font-size: 1.1rem;
-    color: #555;
+.info-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+    border: 1px solid #eee;
+    border-radius: 6px;
+}
+
+.info-row:last-child {
+    margin-bottom: 0;
+}
+
+.info-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: #f0f0f0;
+    flex: 1;
+}
+
+.info-icon {
+    font-size: 16px;
+}
+
+.info-value {
+    font-size: 14px;
+    color: #f0f0f0;
 }
 
 .event-actions {
     display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin-top: 2rem;
+    justify-content: flex-end;
+    /* margin-top: 1.5rem; */
+    padding: 20px 15px;
 }
 
 .join-button, .leave-button {
-    padding: 0.8rem 1.5rem;
+    padding: 8px 24px;
     border: none;
-    border-radius: 4px;
-    font-size: 1rem;
+    border-radius: 8px;
+    font-size: 14px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.2s;
 }
 
 .join-button {
@@ -45,33 +139,172 @@
 }
 
 .join-button:hover {
-    background-color: #45a049;
+    background-color: #333;
 }
 
 .leave-button {
-    background-color: #f44336;
+    background-color: #ff4444;
     color: white;
 }
 
 .leave-button:hover {
-    background-color: #da190b;
+    background-color: #cc0000;
 }
 
 .loading {
     text-align: center;
-    font-size: 1.2rem;
-    color: #666;
-    margin: 2rem;
+    padding: 2rem;
+    color: white;
 }
 
 .error {
     text-align: center;
-    color: #f44336;
-    margin: 2rem;
+    color: #ff4444;
+    padding: 2rem;
 }
 
-.error-message {
-    color: #f44336;
+/* Preserve existing navbar styles */
+.navbar {
+    background: black;
+    height: 60px;
+    display: flex;
+    padding: 0px;
+    flex-direction: row;
+}
+
+.button {
+    background-color: transparent;
+    border: none;
+    color: white;
+    height: 100%;
+    width: 100%;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Chat section styles */
+.chat-section {
+    width: 400px;
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-self: stretch; /* Stretch to match the height of the event details */
+    padding-bottom: 10px; /* Add some padding at the bottom */
+}
+
+/* Map styles */
+.event-map {
+    margin: 15px 0;
+}
+
+/* Participants popup styles */
+.participants-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.participants-modal {
+    background-color: white;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 400px;
+    max-height: 80vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.participants-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.participants-header h2 {
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.close-button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+}
+
+.participants-list {
+    padding: 10px 0;
+    overflow-y: auto;
+}
+
+.participant-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    border-bottom: 1px solid #f5f5f5;
+}
+
+.participant-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 15px;
+    font-size: 18px;
+    color: #666;
+}
+
+.participant-name {
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+}
+
+.organizer-badge {
+    font-size: 12px;
+    background-color: #FF9800;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 10px;
+    margin-left: 8px;
+    font-weight: normal;
+}
+
+.no-participants {
     text-align: center;
-    margin-top: 1rem;
+    color: #666;
+    padding: 20px;
+}
+
+/* Make participant count clickable */
+.participant-count {
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.participant-count:hover {
+    opacity: 0.8;
 }

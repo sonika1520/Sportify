@@ -33,7 +33,7 @@ func TestJWTAuthenticator_GenerateToken(t *testing.T) {
 		"iss": testIss,
 	}
 
-	token, err := auth.GenarateToken(claims)
+	token, err := auth.GenerateToken(claims)
 	assert.NoError(t, err)
 	assert.NotEmpty(t, token)
 }
@@ -48,7 +48,7 @@ func TestJWTAuthenticator_ValidateToken_Success(t *testing.T) {
 		"iss": testIss,
 	}
 
-	tokenString, err := auth.GenarateToken(claims)
+	tokenString, err := auth.GenerateToken(claims)
 	assert.NoError(t, err)
 
 	token, err := auth.ValidateToken(tokenString)
@@ -77,8 +77,6 @@ func TestJWTAuthenticator_ValidateToken_InvalidToken(t *testing.T) {
 
 	// Ensure the token is marked as invalid
 	assert.False(t, token.Valid, "Token should be invalid")
-	assert.False(t, token.Valid, "Token should be invalid when using the wrong secret")
-
 }
 
 func TestJWTAuthenticator_ValidateToken_WrongSecret(t *testing.T) {
@@ -91,7 +89,7 @@ func TestJWTAuthenticator_ValidateToken_WrongSecret(t *testing.T) {
 		"iss": testIss,
 	}
 
-	tokenString, err := auth.GenarateToken(claims)
+	tokenString, err := auth.GenerateToken(claims)
 	assert.NoError(t, err)
 
 	// Create a new authenticator with a different secret

@@ -32,7 +32,8 @@ const Navbar = () => {
           padding: '0',
           color: 'white',
           fontSize: '40px',
-          fontFamily: 'initial'
+          fontWeight: 600,
+          fontStyle: 'italic'
         }}>
           SPORT!FY
         </p>

@@ -20,12 +20,12 @@ func NewJWTAuthenticator(secret, aud, iss string) *JWTAuthenticator {
 	}
 }
 
-func (a *JWTAuthenticator) GenarateToken(claims jwt.Claims) (string, error) {
+func (a *JWTAuthenticator) GenerateToken(claims jwt.Claims) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
 	tokenString, err := token.SignedString([]byte(a.secret))
 	if err != nil {
-		return "", err
+		return "", fmt.Errorf("failed to sign token: %w", err)
 	}
 	return tokenString, nil
 }

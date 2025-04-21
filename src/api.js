@@ -98,7 +98,48 @@ export const createProfile = async (profileData) => {
 
 // Get User Profile
 export const getUserProfile = async () => {
-    return authRequest('get', '/profile/0');
+    try {
+        console.log('getUserProfile: Attempting to fetch user profile');
+        const result = await authRequest('get', '/profile/0');
+
+        // If we get a 404 (not found) error, it means the profile doesn't exist
+        if (result.status === 404) {
+            console.log('getUserProfile: Profile not found (404)');
+            return { error: 'Profile not found', status: 404 };
+        }
+
+        // If there's any other error, log it but don't treat it as "no profile"
+        if (result.error) {
+            console.error('getUserProfile: Error fetching profile:', result.error);
+            // Return a special flag to indicate this was a server error, not a missing profile
+            return { error: result.error, status: result.status, isServerError: true };
+        }
+
+        console.log('getUserProfile: Profile fetched successfully');
+        return result;
+    } catch (error) {
+        console.error('getUserProfile: Unexpected error:', error);
+        return { error: error.message, isServerError: true };
+    }
+};
+
+// Get User Profile by ID
+export const getUserProfileById = async (userId) => {
+    try {
+        console.log(`getUserProfileById: Attempting to fetch profile for user ID ${userId}`);
+        const result = await authRequest('get', `/profile/${userId}`);
+
+        if (result.error) {
+            console.error('getUserProfileById: Error fetching profile:', result.error);
+            return { error: result.error };
+        }
+
+        console.log('getUserProfileById: Profile fetched successfully');
+        return result;
+    } catch (error) {
+        console.error('getUserProfileById: Unexpected error:', error);
+        return { error: error.message };
+    }
 };
 
 // Update User Profile
@@ -176,6 +217,47 @@ export const createEvent = async (eventData) => {
         return await response.json();
     } catch (error) {
         console.error('Error creating event:', error);
+        throw error;
+    }
+};
+
+export const updateEvent = async (eventId, eventData) => {
+    try {
+        console.log('Updating event with ID:', eventId);
+        console.log('Update payload:', eventData);
+
+        const token = localStorage.getItem('token');
+        const response = await fetch(`http://localhost:8080/v1/events/${eventId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(eventData)
+        });
+
+        console.log('Update response status:', response.status);
+
+        // Get the response text first to log it
+        const responseText = await response.text();
+        console.log('Update response text:', responseText);
+
+        // Parse the response if it's JSON
+        let responseData;
+        try {
+            responseData = responseText ? JSON.parse(responseText) : {};
+        } catch (parseError) {
+            console.error('Error parsing response:', parseError);
+            throw new Error('Invalid response format from server');
+        }
+
+        if (!response.ok) {
+            throw new Error(responseData.message || responseData.error || 'Failed to update event');
+        }
+
+        return responseData;
+    } catch (error) {
+        console.error('Error updating event:', error);
         throw error;
     }
 };
@@ -298,6 +380,51 @@ export const getUserJoinedEvents = async () => {
         return { data: joinedEvents };
     } catch (error) {
         console.error('Error fetching joined events:', error);
+        throw error;
+    }
+};
+
+export const getUserCreatedEvents = async () => {
+    try {
+        // Get the current user ID
+        const userId = parseInt(localStorage.getItem('userId'));
+        if (!userId) {
+            throw new Error('User ID not found');
+        }
+
+        // Fetch all events
+        const eventsResponse = await getEvents();
+        const allEvents = eventsResponse.data;
+
+        // Filter events where the user is the owner
+        const createdEvents = allEvents.filter(event => event.event_owner === userId);
+
+        console.log('Created events:', createdEvents);
+        return { data: createdEvents };
+    } catch (error) {
+        console.error('Error fetching created events:', error);
+        throw error;
+    }
+};
+
+export const deleteEvent = async (eventId) => {
+    try {
+        const token = localStorage.getItem('token');
+        const response = await fetch(`http://localhost:8080/v1/events/${eventId}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.message || 'Failed to delete event');
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error deleting event:', error);
         throw error;
     }
 };

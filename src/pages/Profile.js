@@ -1,23 +1,49 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { createProfile } from "../api"; // Import API function
 import "./Profile.css"; // Ensure this CSS file exists
 import { useAuth } from "../context/AuthContext";
 
 export default function Profile() {
+    console.log('Profile component: Mounting');
     const navigate = useNavigate();
     const { login } = useAuth();
     const [formData, setFormData] = useState({
         first_name: "",
         last_name: "",
-        age: 0,
+        age: "",
         gender: "",
         sport_preference: [],
     });
 
+
+    const dropdownRef = useRef(null);
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setDropdownOpen(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
+
+    // Add useEffect to log when component mounts and unmounts
+    React.useEffect(() => {
+        console.log('Profile component: useEffect running');
+
+        return () => {
+            console.log('Profile component: Unmounting');
+        };
+    }, []);
 
     const sportsOptions = ["Football", "Basketball", "Tennis", "Cricket", "Soccer", "Baseball"];
 
@@ -42,13 +68,18 @@ export default function Profile() {
         setError("");  // Reset previous error messages
         setLoading(true);
 
+        console.log('Profile component: Submitting profile data:', formData);
         const result = await createProfile(formData);
 
         setLoading(false);
 
         if (result.error) {
+            console.error('Profile component: Error creating profile:', result.error);
             setError(result.error);
         } else {
+            console.log('Profile component: Profile created successfully');
+            // Set the hasProfile flag in localStorage
+            localStorage.setItem('hasProfile', 'true');
             // Update auth context with the new profile
             login(localStorage.getItem("token"), { profile: result });
             alert("Profile created successfully!");
@@ -70,7 +101,7 @@ export default function Profile() {
                 </div>
 
                 {/* Right Profile Form Section */}
-                <div style={{ flex: 1 }} className="profile-right">
+                <div className="profile-right">
                     <form className="profile-box" onSubmit={handleSubmit}>
                         <h2>Profile</h2>
 
@@ -101,7 +132,9 @@ export default function Profile() {
                             type="number"
                             name="age"
                             placeholder="Enter age"
-                            value={formData.age}
+                            min="1"
+                            max="300"
+                            value={formData.age === 0 ? "" : formData.age}
                             onChange={handleChange}
                             required
                         />
@@ -115,13 +148,29 @@ export default function Profile() {
                         </select>
 
                         <label>Sports Preferences</label>
-                        <div className="dropdown">
-                            <button
+                        <div className="dropdown" ref={dropdownRef}>
+                        <button
                                 type="button"
-                                className="dropdown-button"
+                                className={`dropdown-button ${dropdownOpen ? 'active' : ''}`}
                                 onClick={() => setDropdownOpen(!dropdownOpen)}
                             >
-                                Select Sports ▾
+                                {formData.sport_preference.length === 0 ? (
+                                    <span className="placeholder">Select Sports</span>
+                                ) : (
+                                    <div className="selected-tags">
+                                        {formData.sport_preference.map((sport) => (
+                                            <div key={sport} className="tag">
+                                                {sport}
+                                                <span className="remove-tag" onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    handleSportsChange(sport);
+                                                }}>
+                                                    &times;
+                                                </span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
                             </button>
                             {dropdownOpen && (
                                 <div className="dropdown-content">
@@ -139,7 +188,7 @@ export default function Profile() {
                             )}
                         </div>
 
-                        <button style={{ marginTop: "20px" }} type="submit" className="profile-button" disabled={loading}>
+                        <button style={{ marginTop: "26px", marginBottom:"20px" }} type="submit" className="profile-button" disabled={loading}>
                             {loading ? "Saving..." : "Let's Play"}
                         </button>
                     </form>
@@ -148,3 +197,4 @@ export default function Profile() {
         </div>
     );
 }
+

@@ -41,6 +41,11 @@ func GetGoogleAuthURL() string {
 }
 
 func GetGoogleUserInfo(code string) (*GoogleUserInfo, error) {
+	// Check if mock is set
+	if mockGetGoogleUserInfo != nil {
+		return mockGetGoogleUserInfo(code)
+	}
+
 	ctx := context.Background()
 	token, err := googleOauthConfig.Exchange(ctx, code)
 	if err != nil {

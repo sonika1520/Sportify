@@ -3,7 +3,6 @@
     height: 100%;
     width: 100%;
     font-size: 22px;
-    font-family:"Faculty Glyphic", serif;
     font-weight:400;
     background-color: black;
     color: white;
@@ -12,6 +11,7 @@
     cursor: pointer; /* Makes it clickable */
     transition: background-color 0.3s ease; /* Smooth hover effect */
 }
+
 
 .button:hover {
     background-color: gray; /* Changes color when hovered */
@@ -44,3 +44,87 @@ input{
     height: 30px;
     padding: 5px;
 }
+
+.support-section {
+  background: black;
+  opacity: 90%;
+  text-align: center;
+  padding-top: 20px;
+}
+
+.support-section h2 {
+  font-size: 28px;
+  color: #eee5e5;
+}
+
+.divider {
+  width: 40px;
+  height: 2px;
+  background-color:#eee5e5;
+  margin: 0px auto 10px auto;
+  border-radius: 10px;
+}
+
+.support-subtext {
+  color: #999;
+  font-size: 16px;
+  margin-bottom: 30px;
+}
+
+.support-content {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    margin-top: 30px;
+  }
+  
+  .info-inline {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .info-inline .icon {
+    font-size: 18px;
+  }
+  
+  .info-inline a {
+    color: #eee5e5;
+
+    text-decoration: none;
+  }
+  
+  .info-inline a:hover {
+    color: #ffffff;
+    text-decoration: underline;
+  }
+
+  .footer{
+    background-color: black;
+    color: #ccc;
+    text-align: center;
+    margin: 0px;
+    width: 100%;
+    padding-bottom: 20px;
+    
+
+  }
+
+  .footer a{
+    color: #ccc; 
+    font-size: 14px;
+    text-decoration: none;
+  }
+  .footer a:hover{
+    color: #ffffff;
+    text-decoration: underline;
+  }

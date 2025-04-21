@@ -1,7 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useState, useEffect, useRef } from 'react'
-import { createEvent } from '../api'
+import { createEvent, joinEvent } from '../api'
 
 /**
  * CreateEvent Component
@@ -31,7 +31,7 @@ const CreateEvent = () => {
   useEffect(() => {
     // Load Google Maps JavaScript API
     const googleMapScript = document.createElement('script')
-    googleMapScript.src = `https://maps.googleapis.com/maps/api/js?key=KEY&libraries=places`
+    googleMapScript.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyDmyMg9zTEshR4IYiUCBN9_OeazNbfvtf8&libraries=places`
     googleMapScript.async = true
 
     // Initialize Autocomplete after script loads
@@ -91,8 +91,7 @@ const CreateEvent = () => {
 
   /**
    * Handles form submission
-   * Currently using localStorage for demonstration
-   * Will be replaced with API call to backend
+   * Creates a new event and automatically joins the creator as a participant
    * @param {Event} e - The form submission event
    */
   const handleSubmit = async (e) => {
@@ -113,6 +112,28 @@ const CreateEvent = () => {
         ...formData,
         event_date: new Date(formData.event_date).toISOString(),
       })
+
+      console.log('Event created successfully:', newEvent)
+
+      // Automatically join the event as the creator
+      if (newEvent && newEvent.id) {
+        try {
+          console.log('Joining event as creator...', newEvent.id)
+
+          // Use the same joinEvent function that works on the Home page
+          const joinResult = await joinEvent(newEvent.id)
+          console.log('Successfully joined event as creator:', joinResult)
+
+          // Set a flag in localStorage to indicate this event was just created
+          // This can be useful for refreshing the events list when returning to Home
+          localStorage.setItem('lastCreatedEventId', newEvent.id)
+          localStorage.setItem('lastCreatedEventTime', new Date().toISOString())
+        } catch (joinError) {
+          console.error('Error joining event as creator:', joinError)
+          // We don't want to block the user from proceeding if this fails
+          // The event was still created successfully
+        }
+      }
 
       alert('Event created successfully!')
       navigate('/home')
@@ -169,7 +190,8 @@ const CreateEvent = () => {
               padding: '0',
               color: 'white',
               fontSize: '40px',
-              fontFamily: 'initial',
+              fontWeight: 600,
+              fontStyle: 'italic'
             }}
           >
             SPORT!FY
