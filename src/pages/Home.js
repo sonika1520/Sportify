@@ -4,27 +4,84 @@ import "./Main.css"
 import { getEvents, joinEvent } from '../api'
 
 export default function Home() {
+    console.log('Home component: Mounting');
     const navigate = useNavigate();
     const [events, setEvents] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const [joinedEvents, setJoinedEvents] = useState([]);
+    const [initialCheckDone, setInitialCheckDone] = useState(false);
+
+    // Check if user has a profile only once when component mounts
+    useEffect(() => {
+        const checkProfileOnce = async () => {
+            console.log('Home component: Performing one-time profile check');
+
+            // Skip check if we've already done it in this session
+            if (sessionStorage.getItem('profileCheckDone') === 'true') {
+                console.log('Home component: Profile check already done in this session');
+                setInitialCheckDone(true);
+                return;
+            }
+
+            try {
+                // Try to get the user profile
+                const response = await fetch('http://localhost:8080/v1/profile/0', {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    }
+                });
+
+                if (response.status === 404) {
+                    // User doesn't have a profile
+                    console.log('Home component: User has no profile, redirecting to profile creation');
+                    navigate('/profile');
+                    return;
+                }
+
+                // If we get here, user has a profile or there was a different error
+                // Either way, we'll allow them to stay on the home page
+                console.log('Home component: User has a profile or there was a non-404 error');
+                sessionStorage.setItem('profileCheckDone', 'true');
+            } catch (error) {
+                console.error('Home component: Error checking profile:', error);
+                // On error, we'll still let them stay on the home page
+            }
+
+            setInitialCheckDone(true);
+        };
+
+        checkProfileOnce();
+    }, [navigate]);
 
     useEffect(() => {
+        // Only fetch events after the initial profile check is done
+        if (!initialCheckDone) {
+            console.log('Home component: Waiting for profile check before fetching events');
+            return;
+        }
+
+        console.log('Home component: Profile check done, now fetching events');
         const fetchEvents = async () => {
             try {
+                console.log('Home component: Fetching events...');
                 const eventsResponse = await getEvents();
                 const events = eventsResponse.data;
-                console.log("Events: ", events);
+                console.log("Home component: Events received: ", events);
                 setEvents(events);
             } catch (error) {
-                console.error('Error fetching events:', error);
+                console.error('Home component: Error fetching events:', error);
                 setError('Failed to load events');
             }
         };
 
         fetchEvents();
-    }, []);
+
+        // Cleanup function to log when component unmounts
+        return () => {
+            console.log('Home component: Unmounting');
+        };
+    }, [initialCheckDone]); // Re-run when initialCheckDone changes
 
     const handleJoinTeam = async (eventId) => {
         try {
@@ -58,6 +115,33 @@ export default function Home() {
         console.log('Viewing event:', eventId);
         navigate(`/events/${eventId}`);
     };
+
+    // Show loading indicator while initial profile check is in progress
+    if (!initialCheckDone) {
+        return (
+            <div style={{
+                minHeight: "100vh",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundImage: "url('/sports.jpg')",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundAttachment: "fixed"
+            }}>
+                <div style={{
+                    padding: "20px",
+                    backgroundColor: "rgba(0, 0, 0, 0.7)",
+                    color: "white",
+                    borderRadius: "8px",
+                    textAlign: "center"
+                }}>
+                    <h2>Loading...</h2>
+                    <p>Checking your profile status</p>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div style={{
