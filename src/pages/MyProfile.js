@@ -258,7 +258,8 @@ export default function MyProfile() {
                         padding: '0',
                         color: 'white',
                         fontSize: '40px',
-                        fontFamily: 'initial'
+                        fontweight: 600,
+                        fontstyle: 'italic'
                     }}>
                         SPORT!FY
                     </p>

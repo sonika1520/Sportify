@@ -126,7 +126,8 @@ export default function EventDetails() {
                         padding: '0',
                         color: 'white',
                         fontSize: '40px',
-                        fontFamily: 'initial'
+                        fontweight: 600,
+                        fontstyle: 'italic'
                     }}>
                         SPORT!FY
                     </p>
