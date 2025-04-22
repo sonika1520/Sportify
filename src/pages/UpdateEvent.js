@@ -139,13 +139,13 @@ export default function UpdateEvent() {
     setLoading(true)
 
     try {
-      // Combine date and time into a single ISO string
+      // Get the ISO string directly from the form data
       const eventDateTime = new Date(
         `${formData.event_date}T${formData.event_time}`
       ).toISOString()
 
       // Log the data we're sending
-      console.log('Sending update with date:', eventDateTime);
+      console.log('Sending update with date:', eventDateTime)
 
       // Update event using the API
       // The backend expects event_date, not event_datetime
@@ -180,126 +180,348 @@ export default function UpdateEvent() {
   }
 
   return (
-    <div className="create-event-container">
-      <div className="create-event-form-container">
-        <h1>Update Event</h1>
-        {error && <div className="error-message">{error}</div>}
-
-        <form onSubmit={handleSubmit} className="create-event-form">
-          <div className="form-group">
-            <label htmlFor="title">Event Title</label>
-            <input
-              type="text"
-              id="title"
-              name="title"
-              value={formData.title}
-              onChange={handleChange}
-              required
-              placeholder="Enter event title"
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="sport">Sport</label>
-            <input
-              type="text"
-              id="sport"
-              name="sport"
-              value={formData.sport}
-              onChange={handleChange}
-              required
-              placeholder="Enter sport type"
-            />
-          </div>
-
-          <div className="form-row">
-            <div className="form-group">
-              <label htmlFor="event_date">Date</label>
-              <input
-                type="date"
-                id="event_date"
-                name="event_date"
-                value={formData.event_date}
-                onChange={handleChange}
-                required
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="event_time">Time</label>
-              <input
-                type="time"
-                id="event_time"
-                name="event_time"
-                value={formData.event_time}
-                onChange={handleChange}
-                required
-              />
-            </div>
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="max_players">Maximum Players</label>
-            <input
-              type="number"
-              id="max_players"
-              name="max_players"
-              value={formData.max_players}
-              onChange={handleChange}
-              required
-              min="2"
-              max="100"
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="location_name">Location</label>
-            <input
-              type="text"
-              id="location_name"
-              name="location_name"
-              value={formData.location_name}
-              onChange={handleChange}
-              required
-              placeholder="Search for a location"
-              ref={inputRef}
-            />
-            {formData.latitude && formData.longitude && (
-              <div className="location-preview">
-                <small>
-                  Selected: {formData.location_name} ({formData.latitude.toFixed(6)},{' '}
-                  {formData.longitude.toFixed(6)})
-                </small>
-              </div>
-            )}
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="description">Description</label>
-            <textarea
-              id="description"
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-              rows="4"
-              placeholder="Describe your event"
-            ></textarea>
-          </div>
-
-          <div className="form-actions">
+    <div>
+      <nav className="navbar">
+        <div style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: '40%',
+          backgroundColor: 'black',
+        }}>
+          <img style={{ width: "50px", paddingRight: "10px" }} src="/iconmain.png" alt={"sportify"} />
+          <p style={{
+            margin: '0',
+            padding: '0',
+            color: 'white',
+            fontSize: '40px',
+            fontFamily: 'initial'
+          }}>
+            SPORT!FY
+          </p>
+        </div>
+        <div style={{ flex: 2, display: 'flex', height: '100%', width: '100%', justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }} className="flex">
+          <div style={{ flex: 3, height: '100%', width: '100%' }}><button className="button" onClick={() => navigate("/Home")}>Home</button></div>
+          <div style={{ height: '100%', width: '100%', flex: 3 }}><button className="button" onClick={() => navigate("/MyProfile")}>Profile</button></div>
+          <div style={{ height: '100%', width: '100%', flex: 3 }}>
             <button
-              type="button"
-              onClick={() => navigate(`/events/${eventId}`)}
-              className="cancel-button"
-              disabled={loading}
+              className="button"
+              onClick={() => navigate("/create-event")}
+              style={{
+                fontSize: '24px',
+                fontWeight: 'bold',
+                padding: '0 20px'
+              }}
             >
-              Cancel
-            </button>
-            <button type="submit" className="submit-button" disabled={loading}>
-              {loading ? 'Updating...' : 'Update Event'}
+              +
             </button>
           </div>
-        </form>
+          <div style={{ height: '100%', width: '100%', flex: 3 }}>
+            <button className="button" onClick={() => {
+              localStorage.removeItem("token");
+              navigate("/login");
+            }}>Sign Out</button>
+          </div>
+        </div>
+      </nav>
+
+      <div
+        style={{
+          flex: 1,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          padding: '20px',
+        }}
+      >
+        <div
+          style={{
+            backgroundColor: 'white',
+            borderRadius: '10px',
+            padding: '50px',
+            width: '500px',
+            boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
+          }}
+        >
+          <h2
+            style={{
+              textAlign: 'center',
+              marginBottom: '30px',
+              fontSize: '24px',
+              color: '#333',
+            }}
+          >
+            Update Event
+          </h2>
+
+          {error && (
+            <p
+              style={{
+                color: 'red',
+                fontSize: '14px',
+                textAlign: 'center',
+                marginBottom: '20px',
+              }}
+            >
+              {error}
+            </p>
+          )}
+
+          <form
+            onSubmit={handleSubmit}
+            style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}
+          >
+            <div style={{ marginBottom: '15px' }}>
+              <label
+                htmlFor="title"
+                style={{
+                  display: 'block',
+                  marginBottom: '5px',
+                  fontSize: '14px',
+                  fontWeight: 'bold',
+                  color: '#555',
+                }}
+              >
+                Event Title
+              </label>
+              <input
+                type="text"
+                id="title"
+                name="title"
+                value={formData.title}
+                onChange={handleChange}
+                required
+                placeholder="Enter event title"
+                style={{
+                  width: '100%',
+                  padding: '10px',
+                  borderRadius: '5px',
+                  border: '1px solid #ddd',
+                  fontSize: '14px',
+                }}
+              />
+            </div>
+
+            <div style={{ marginBottom: '15px' }}>
+              <label
+                htmlFor="description"
+                style={{
+                  display: 'block',
+                  marginBottom: '5px',
+                  fontSize: '14px',
+                  fontWeight: 'bold',
+                  color: '#555',
+                }}
+              >
+                Description
+              </label>
+              <textarea
+                id="description"
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                rows="4"
+                placeholder="Describe your event"
+                style={{
+                  width: '100%',
+                  padding: '10px',
+                  borderRadius: '5px',
+                  border: '1px solid #ddd',
+                  fontSize: '14px',
+                  resize: 'vertical',
+                  minHeight: '100px',
+                }}
+              ></textarea>
+            </div>
+
+            <div style={{ marginBottom: '15px' }}>
+              <label
+                htmlFor="sport"
+                style={{
+                  display: 'block',
+                  marginBottom: '5px',
+                  fontSize: '14px',
+                  fontWeight: 'bold',
+                  color: '#555',
+                }}
+              >
+                Sport
+              </label>
+              <select
+                id="sport"
+                name="sport"
+                value={formData.sport}
+                onChange={handleChange}
+                required
+                style={{
+                  width: '100%',
+                  padding: '10px',
+                  borderRadius: '5px',
+                  border: '1px solid #ddd',
+                  fontSize: '14px',
+                }}
+              >
+                <option value="">Select a sport</option>
+                <option value="Football">Football</option>
+                <option value="Basketball">Basketball</option>
+                <option value="Tennis">Tennis</option>
+                <option value="Cricket">Cricket</option>
+                <option value="Soccer">Soccer</option>
+                <option value="Baseball">Baseball</option>
+              </select>
+            </div>
+
+
+
+            <div style={{ marginBottom: '15px' }}>
+              <label
+                htmlFor="max_players"
+                style={{
+                  display: 'block',
+                  marginBottom: '5px',
+                  fontSize: '14px',
+                  fontWeight: 'bold',
+                  color: '#555',
+                }}
+              >
+                Maximum Players
+              </label>
+              <input
+                type="number"
+                id="max_players"
+                name="max_players"
+                value={formData.max_players}
+                onChange={handleChange}
+                required
+                min="2"
+                max="100"
+                style={{
+                  width: '100%',
+                  padding: '10px',
+                  borderRadius: '5px',
+                  border: '1px solid #ddd',
+                  fontSize: '14px',
+                }}
+              />
+            </div>
+
+            <div style={{ marginBottom: '15px' }}>
+              <label
+                htmlFor="location_name"
+                style={{
+                  display: 'block',
+                  marginBottom: '5px',
+                  fontSize: '14px',
+                  fontWeight: 'bold',
+                  color: '#555',
+                }}
+              >
+                Location
+              </label>
+              <input
+                type="text"
+                id="location_name"
+                name="location_name"
+                value={formData.location_name}
+                onChange={handleChange}
+                required
+                placeholder="Search for a location"
+                ref={inputRef}
+                style={{
+                  width: '100%',
+                  padding: '10px',
+                  borderRadius: '5px',
+                  border: '1px solid #ddd',
+                  fontSize: '14px',
+                }}
+              />
+              {formData.latitude && formData.longitude && (
+                <div style={{ marginTop: '5px', fontSize: '12px', color: '#666' }}>
+                  <small>
+                    Selected: {formData.location_name} ({formData.latitude.toFixed(6)},{' '}
+                    {formData.longitude.toFixed(6)})
+                  </small>
+                </div>
+              )}
+            </div>
+
+            {/* Date and Time field */}
+            <div style={{ marginBottom: '15px' }}>
+              <label
+                htmlFor='event_date'
+                style={{
+                  display: 'block',
+                  marginBottom: '5px',
+                  fontSize: '14px',
+                  fontWeight: 'bold',
+                  color: '#555',
+                }}
+              >
+                Date and Time
+              </label>
+              <input
+                id='event_date'
+                type='datetime-local'
+                name='event_date'
+                value={`${formData.event_date}T${formData.event_time}`}
+                onChange={(e) => {
+                  const dateTime = new Date(e.target.value);
+                  const dateString = dateTime.toISOString().split('T')[0];
+                  const timeString = e.target.value.split('T')[1];
+                  setFormData({
+                    ...formData,
+                    event_date: dateString,
+                    event_time: timeString
+                  });
+                }}
+                required
+                style={{
+                  width: '100%',
+                  padding: '10px',
+                  borderRadius: '5px',
+                  border: '1px solid #ddd',
+                  fontSize: '14px',
+                }}
+              />
+            </div>
+
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '30px' }}>
+              <button
+                type="button"
+                onClick={() => navigate(`/events/${eventId}`)}
+                disabled={loading}
+                style={{
+                  padding: '10px 20px',
+                  backgroundColor: '#f44336',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '5px',
+                  cursor: 'pointer',
+                  fontSize: '14px',
+                  opacity: loading ? 0.7 : 1,
+                }}
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                disabled={loading}
+                style={{
+                  padding: '10px 20px',
+                  backgroundColor: '#4CAF50',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '5px',
+                  cursor: 'pointer',
+                  fontSize: '14px',
+                  opacity: loading ? 0.7 : 1,
+                }}
+              >
+                {loading ? 'Updating...' : 'Update Event'}
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   )
