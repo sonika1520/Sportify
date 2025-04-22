@@ -52,6 +52,7 @@
 }
 
 .profile-box label {
+    color: black;
     display: block;
     text-align: left;
     margin-bottom: 6px;
