@@ -42,7 +42,7 @@ function App() {
             {/* Public Routes */}
             <Route index element={<Main />}/>
             <Route path="/Main" element={<Main />}/>
-            <Route path="/Login" element={<Login />}/>
+            <Route path="/login" element={<Login />}/>
             <Route path="/Forgotpass" element={<Forgotpass />}/>
             <Route path="/Register" element={<Register />}/>
             <Route path="/auth/google/callback" element={<GoogleCallback />}/>
