@@ -54,15 +54,19 @@ export default function EventDetails() {
                 const eventData = result.data;
                 setEvent(eventData);
 
-                setIsParticipant(false);
-                if (eventData.participants && Array.isArray(eventData.participants)) {
-                    for (const participant of eventData.participants) {
-                        if (participant.user_id === parseInt(localStorage.getItem("userId"))) {
-                            setIsParticipant(true);
-                            break;
-                        }
-                    }
-                }
+                // Get current user ID once
+                const currentUserId = parseInt(localStorage.getItem("userId"));
+                
+                // Check if user is a participant
+                const isUserParticipant = eventData.participants?.some(
+                    participant => participant.user_id === currentUserId
+                );
+                
+                console.log('Current user ID:', currentUserId);
+                console.log('Participants:', eventData.participants);
+                console.log('Is user participant?', isUserParticipant);
+                
+                setIsParticipant(isUserParticipant);
                 setLoading(false);
             } catch (error) {
                 console.error('Error fetching event details:', error);
@@ -76,25 +80,63 @@ export default function EventDetails() {
 
     const handleJoin = async () => {
         try {
+            setError(null);
             await joinEvent(eventId);
+            
+            // Update the local state immediately
             setIsParticipant(true);
-            // Refresh event details to update participant count
-            const data = await getEventDetails(eventId);
-            setEvent(data.data);
+            
+            // Update the event data
+            const result = await getEventDetails(eventId);
+            if (result && result.data) {
+                const currentUserId = parseInt(localStorage.getItem('userId'));
+                const updatedEvent = { ...result.data };
+                
+                // Only add the user if they're not already in participants
+                if (!updatedEvent.participants.some(p => p.user_id === currentUserId)) {
+                    updatedEvent.participants.push({
+                        user_id: currentUserId,
+                        first_name: localStorage.getItem('firstName'),
+                        last_name: localStorage.getItem('lastName')
+                    });
+                    updatedEvent.registered_count = (updatedEvent.registered_count || 0) + 1;
+                }
+                setEvent(updatedEvent);
+            }
+            alert('Successfully joined the event!');
         } catch (error) {
-            setError('Failed to join event');
+            console.error('Error joining event:', error);
+            setError('Failed to join event: ' + (error.message || 'Unknown error'));
+            setIsParticipant(false); // Reset state if join fails
+            alert('Failed to join event: ' + (error.message || 'Unknown error'));
         }
     };
 
     const handleLeave = async () => {
         try {
+            setError(null);
             await leaveEvent(eventId);
+            
+            // Update the local state immediately
             setIsParticipant(false);
-            // Refresh event details to update participant count
-            const data = await getEventDetails(eventId);
-            setEvent(data.data);
+            
+            // Update the event data
+            const result = await getEventDetails(eventId);
+            if (result && result.data) {
+                const currentUserId = parseInt(localStorage.getItem('userId'));
+                const updatedEvent = { ...result.data };
+                updatedEvent.participants = updatedEvent.participants.filter(
+                    p => p.user_id !== currentUserId
+                );
+                updatedEvent.registered_count = Math.max(0, (updatedEvent.registered_count || 1) - 1);
+                setEvent(updatedEvent);
+            }
+            alert('Successfully left the event!');
         } catch (error) {
-            setError('Failed to leave event');
+            console.error('Error leaving event:', error);
+            setError('Failed to leave event: ' + (error.message || 'Unknown error'));
+            setIsParticipant(true); // Reset state if leave fails
+            alert('Failed to leave event: ' + (error.message || 'Unknown error'));
         }
     };
     

@@ -148,8 +148,23 @@ export default function Home() {
 
                 // Refresh events to get updated data
                 const eventsResponse = await getEvents();
-                const updatedEvents = eventsResponse.data;
-                setEvents(updatedEvents);
+                if (eventsResponse.data) {
+                    // Update the events with the new data
+                    const updatedEvents = eventsResponse.data.map(event => {
+                        if (event.id === eventId) {
+                            // Add current user to participants if not already there
+                            const currentUserId = parseInt(localStorage.getItem('userId'));
+                            if (!event.participants.some(p => p.user_id === currentUserId)) {
+                                event.participants.push({
+                                    user_id: currentUserId
+                                });
+                                event.registered_count = (event.registered_count || 0) + 1;
+                            }
+                        }
+                        return event;
+                    });
+                    setEvents(updatedEvents);
+                }
             }
         } catch (error) {
             console.error('Error joining event:', error);
